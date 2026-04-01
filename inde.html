@@ -1,0 +1,333 @@
+Put your HTML text here<!DOCTYPE html>
+
+<html class="dark" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary": "#eac349",
+              "on-primary-fixed-variant": "#1f477b",
+              "outline-variant": "#43474f",
+              "on-secondary": "#412d00",
+              "surface": "#10131a",
+              "primary": "#a7c8ff",
+              "on-error-container": "#ffdad6",
+              "tertiary-fixed": "#ffe088",
+              "inverse-on-surface": "#2d3038",
+              "outline": "#8d919a",
+              "on-secondary-fixed-variant": "#5d4200",
+              "surface-container": "#1d1f27",
+              "tertiary-fixed-dim": "#e9c349",
+              "on-tertiary-fixed-variant": "#574500",
+              "on-surface": "#e1e2ec",
+              "error": "#ffb4ab",
+              "error-container": "#93000a",
+              "surface-container-highest": "#32353d",
+              "surface-bright": "#363941",
+              "on-secondary-container": "#f3c771",
+              "secondary-container": "#725201",
+              "on-primary-container": "#799dd6",
+              "background": "#10131a",
+              "surface-container-lowest": "#0b0e15",
+              "on-secondary-fixed": "#261900",
+              "surface-container-low": "#191b23",
+              "on-primary-fixed": "#001b3c",
+              "inverse-primary": "#3a5f94",
+              "secondary": "#ecc06b",
+              "surface-dim": "#10131a",
+              "surface-container-high": "#272a32",
+              "primary-fixed-dim": "#a7c8ff",
+              "surface-variant": "#32353d",
+              "surface-tint": "#a7c8ff",
+              "on-tertiary": "#3c2f00",
+              "on-primary": "#003061",
+              "inverse-surface": "#e1e2ec",
+              "on-error": "#690005",
+              "primary-container": "#003366",
+              "on-surface-variant": "#c3c6d1",
+              "on-tertiary-fixed": "#241a00",
+              "secondary-fixed": "#ffdea4",
+              "on-background": "#e1e2ec",
+              "primary-fixed": "#d5e3ff",
+              "on-tertiary-container": "#4f3e00",
+              "secondary-fixed-dim": "#ecc06b",
+              "tertiary-container": "#cca830"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-secondary selection:text-on-secondary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#10131a]/70 backdrop-blur-xl shadow-2xl shadow-black/20 flex justify-between items-center px-12 py-6">
+<div class="flex items-center gap-4">
+<img alt="Sovereign Concierge Logo" class="h-10 w-auto" data-alt="minimalist luxury corporate logo for Sovereign Concierge with elegant gold accents on a transparent background" src="https://lh3.googleusercontent.com/aida/ADBb0uiQb5EjQV8aNLhbp5T-uwTwKuPLJIsQ5igme-OTsYOrNriqercH0BPubGfMRUoCausZD6LKvukGg-lWdUG1rx4ojEzXf9iFdxs833hH60O7FurMCdScK7Q5YQ4B4v5HTLvgrqfCiV6YBe-oYPQyqWVljaHjtoyQn8H79cghcycGwAhVHq8oVFie8tgY7GQV6-ysXIbz3PBtgi0VszR17jMuc1Bnet7ct29JE74Tb5fnnktTQAyaE3XYPkrjl3h7kHoT1H2b1M7fow"/>
+<span class="text-xl font-bold tracking-widest text-[#ecc06b] uppercase">Solusi Kita</span>
+</div>
+<div class="hidden md:flex gap-10 font-manrope tracking-tight font-light">
+<a class="text-[#e1e2ec]/60 hover:text-[#e1e2ec] transition-colors" href="#">Layanan</a>
+<a class="text-[#e1e2ec]/60 hover:text-[#e1e2ec] transition-colors" href="#">Armada</a>
+<a class="text-[#ecc06b] font-semibold border-b-2 border-[#ecc06b] pb-1" href="#">Tentang Kami</a>
+<a class="text-[#e1e2ec]/60 hover:text-[#e1e2ec] transition-colors" href="#">Kontak</a>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-[#e1e2ec]/60 cursor-pointer hover:text-[#ecc06b]">notifications</span>
+<span class="material-symbols-outlined text-[#e1e2ec]/60 cursor-pointer hover:text-[#ecc06b]">account_circle</span>
+<button class="bg-secondary text-on-secondary px-6 py-2 rounded-lg font-semibold hover:scale-95 duration-200 ease-in-out">
+                Pesan Sekarang
+            </button>
+</div>
+</nav>
+<main class="pt-24">
+<!-- Hero Section -->
+<section class="relative min-h-[921px] flex items-center px-12 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent z-10"></div>
+<img alt="Luxury Office" class="w-full h-full object-cover" data-alt="ultra-modern luxury office interior with floor-to-ceiling windows overlooking a twilight city skyline, dramatic lighting and deep shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9GNBDzFWXbB4J9me0AByvMxYxMw8DMn59TDZnME-vlcoSM5SM5XzD3qvO2YiWyx9UogudYUaThbbXJNNV63wkV5GIhgLwe1o016XNJRZc-xwVBPrJHiENzFzqxnuD99uWgJuEQWVCZOMajtkGS7Dp0abayZpy0ecFytctcLVAfZOZiqsTiMJSE_zrQ6bsrBdudYPP8keDthdR_VSzSZoHS8IMsQlYuaYddSEn9PWcSOOzAqqRC_5uY-E-vzi2m30ezV1cKGAsjvU"/>
+</div>
+<div class="relative z-20 max-w-4xl">
+<p class="label-md uppercase tracking-[0.4em] text-secondary mb-6">The Digital Solution</p>
+<h1 class="text-7xl font-extrabold tracking-tight text-on-surface leading-[1.1] mb-8">
+                    Efisiensi Tanpa Batas: <br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-tertiary">Solusi Kita</span> untuk <br/>
+                    Gaya Hidup Anda
+                </h1>
+<p class="text-xl text-on-surface-variant font-light max-w-2xl mb-12 leading-relaxed">
+                    Kami menghadirkan standar baru dalam layanan personal. Bukan sekadar bantuan, melainkan kehadiran mitra profesional yang siap sedia dalam genggaman Anda.
+                </p>
+<div class="flex gap-6">
+<button class="bg-secondary text-on-secondary px-10 py-4 rounded-lg font-bold text-lg hover:bg-tertiary transition-all shadow-xl shadow-secondary/10">
+                        Mulai Pengalaman
+                    </button>
+<button class="border border-secondary/30 text-secondary px-10 py-4 rounded-lg font-bold text-lg hover:bg-secondary/5 transition-all">
+                        Konsultasi Gratis
+                    </button>
+</div>
+</div>
+</section>
+<!-- Keunggulan Operasional (Bento Grid Style) -->
+<section class="py-32 px-12 bg-surface-container-low">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20">
+<div class="max-w-2xl">
+<h2 class="text-5xl font-bold tracking-tight mb-6">Keunggulan Solusi Kita</h2>
+<p class="text-on-surface-variant text-lg font-light">Dedikasi kami pada kecepatan dan presisi menciptakan ekosistem layanan yang tidak hanya cepat, tapi juga bermakna.</p>
+</div>
+<div class="hidden md:block">
+<span class="text-secondary font-black text-8xl opacity-10">EXCELLENCE</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="md:col-span-2 bg-surface-container-high p-12 rounded-xl border border-outline-variant/10 group hover:bg-surface-container-highest transition-all duration-500">
+<div class="flex justify-between items-start mb-12">
+<span class="material-symbols-outlined text-5xl text-secondary" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="text-xs uppercase tracking-widest text-on-surface-variant">Real-Time Response</span>
+</div>
+<h3 class="text-3xl font-bold mb-4">Respon Instan Solusi Kita</h3>
+<p class="text-on-surface-variant font-light text-lg">Sistem AI kami mencocokkan kebutuhan Anda dengan mitra terdekat dalam hitungan detik. Waktu tunggu adalah masa lalu bagi pengguna Solusi Kita.</p>
+</div>
+<div class="bg-surface-container-high p-12 rounded-xl border border-outline-variant/10 flex flex-col justify-between hover:bg-surface-container-highest transition-all duration-500">
+<span class="material-symbols-outlined text-5xl text-secondary">touch_app</span>
+<div>
+<h3 class="text-2xl font-bold mb-2">Kemudahan Pemesanan</h3>
+<p class="text-on-surface-variant font-light">Tiga ketukan untuk mendapatkan layanan profesional berkualitas tinggi di pintu rumah Anda.</p>
+</div>
+</div>
+<div class="bg-surface-container-high p-12 rounded-xl border border-outline-variant/10 flex flex-col justify-between hover:bg-surface-container-highest transition-all duration-500">
+<span class="material-symbols-outlined text-5xl text-secondary">verified_user</span>
+<div>
+<h3 class="text-2xl font-bold mb-2">Keamanan Terjamin</h3>
+<p class="text-on-surface-variant font-light">Setiap mitra melalui proses kurasi ketat dan verifikasi latar belakang menyeluruh.</p>
+</div>
+</div>
+<div class="md:col-span-2 relative overflow-hidden rounded-xl h-64 group">
+<img alt="Collaboration" class="w-full h-full object-cover grayscale opacity-50 group-hover:scale-105 transition-transform duration-700" data-alt="diverse group of professional people in a sleek modern workspace, dramatic low-key lighting, corporate excellence aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNbBl7htuYkOfzuE16NCARsr1NHouvgE2Uu68LXlPzkWssgYypSAB4s8TJ3LSYol2FAcKBfviTK21QRj8cmjqfN9Xbh9qX_5ohh-TNWq8eklUtKALsnDShx2dqHvMnDnY-1de3CKnKKFXLzWDWKEPd-2iFgDUexmGABPvhykarBl8W1TfYZreUsWfav-S9noTAoLQChJmdnVhSjwIRVNLInaIAxY-c3rLrII_j7keazLGsKF2mRA-nwDFUeB7T_l7OOOHUkg6E2gM"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent p-12 flex flex-col justify-end">
+<h3 class="text-2xl font-bold">Mitra Profesional Berlisensi</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Grid Layanan (On-Call Focus) -->
+<section class="py-32 px-12">
+<div class="max-w-7xl mx-auto">
+<div class="mb-20 text-center">
+<h2 class="text-5xl font-bold tracking-tight mb-4">Layanan Solusi Kita On-Call</h2>
+<p class="text-on-surface-variant text-lg font-light">Siap panggil kapan saja, di mana saja. Definisi praktis yang sesungguhnya.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<!-- Guru Privat -->
+<div class="group relative">
+<div class="aspect-[3/4] rounded-xl overflow-hidden mb-6">
+<img alt="Privat Tutor" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="professional private tutor teaching in a modern minimal home setting, soft morning light, intellectual atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDI3DMLd216cjDETbqqRKtYj8EMHZPEGIPoWzLitgCYqLcddJOGWFyZe1ohHH8TyzIM44VrDdsP4QtnpcKBG5i4ke1f42NeABCrAC8rvcjEs4vjouMLqjhTSLa9MUZyz7GP_1xM88QMdzaGKiaQ2YgJdRU5-3KnHnv9hh2H7BOFrTXgJlGTnpuQCxyuB8NYFUfygWiqbRPJyHvYuz3bx2TcBsUz_mVHzCq2NTebsbxRWjwlNAzoYGUeyTy4G3qo0nUNC6NRcsrzHs4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="absolute bottom-8 left-8 right-8">
+<div class="flex items-center gap-2 mb-3">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-xs font-bold tracking-widest text-tertiary uppercase">Tersedia Sekarang</span>
+</div>
+<h3 class="text-3xl font-bold text-on-surface">Guru Privat</h3>
+</div>
+</div>
+<p class="text-on-surface-variant font-light mb-6 px-2">Edukasi eksklusif untuk pengembangan diri dan akademik, hadir langsung di ruang tamu Anda.</p>
+<a class="px-2 text-secondary font-bold flex items-center gap-2 group/link" href="#">
+                            Pesan Layanan <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</a>
+</div>
+<!-- Mekanik Panggilan -->
+<div class="group relative">
+<div class="aspect-[3/4] rounded-xl overflow-hidden mb-6">
+<img alt="Mechanic" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="high-end automotive technician working on a luxury car engine, cinematic lighting, focused and professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjtTsw2-OeQcX33bws3GccD7PX4oTCOXWgx30BJLMjSYF6VRhJDRlS2SHvBiiya0yp8kKjMZCR--MYYdzKE_RBXQheanx6YEgoK7I5RtX0Xqrw2bBvMstbNv5OcUHXSB93cWqXRLypQ7bhprWxC2D_pdZbhG4P1oUxsbicVBl-A94Tfd4IzbWYefF5DzhM__xC20lBTfxGFYlGqMyUKdNMadN2eI_yaGKBa3WBBiqPnTFsMl6i0ffNZ38APpy16DAsO6A_bZuBEkw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="absolute bottom-8 left-8 right-8">
+<div class="flex items-center gap-2 mb-3">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-xs font-bold tracking-widest text-tertiary uppercase">Respon 15 Menit</span>
+</div>
+<h3 class="text-3xl font-bold text-on-surface">Mekanik Panggilan</h3>
+</div>
+</div>
+<p class="text-on-surface-variant font-light mb-6 px-2">Perawatan kendaraan premium tanpa perlu meninggalkan kenyamanan rumah atau kantor Anda.</p>
+<a class="px-2 text-secondary font-bold flex items-center gap-2 group/link" href="#">
+                            Pesan Layanan <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</a>
+</div>
+<!-- Supir Pribadi -->
+<div class="group relative">
+<div class="aspect-[3/4] rounded-xl overflow-hidden mb-6">
+<img alt="Private Driver" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="professional chauffeur in suit opening a car door, luxury black sedan, city background at night" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArznPzGZbTgiopukJo49RIk6pIqCFz_sJ7edWt74NGjdGgaMFCBv61L4-gG81F3DF3jDhHrrzm80DvEDCyxgOS1hGsY1llIOUS0WQ9JHbDI2bIsFpECp_nJZRuDQZ4Z_niujkoDtTHclTyEHOJUdwWAf7fQ24lxbw2M7gmAJwIggG4GivIF4Yr7nqVBL98rVR2TulRU0qeVPRUzXbmNcnLzod3niUA68q8Rs_VanZF0UBpnM8LEBr03A1oSz0q5s0heCV1h9qQRek"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="absolute bottom-8 left-8 right-8">
+<div class="flex items-center gap-2 mb-3">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-xs font-bold tracking-widest text-tertiary uppercase">Elite Tier</span>
+</div>
+<h3 class="text-3xl font-bold text-on-surface">Supir Pribadi</h3>
+</div>
+</div>
+<p class="text-on-surface-variant font-light mb-6 px-2">Layanan mobilitas kelas atas dengan pengemudi profesional yang menjamin keamanan dan kenyamanan.</p>
+<a class="px-2 text-secondary font-bold flex items-center gap-2 group/link" href="#">
+                            Pesan Layanan <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Statistik Efisiensi -->
+<section class="py-32 bg-surface-container-lowest border-y border-outline-variant/10">
+<div class="max-w-7xl mx-auto px-12">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-16">
+<div class="text-center">
+<p class="text-6xl font-black text-secondary mb-4">12<span class="text-2xl font-bold">mnt</span></p>
+<p class="text-sm uppercase tracking-widest text-on-surface-variant">Rata-rata Waktu Respon</p>
+</div>
+<div class="text-center">
+<p class="text-6xl font-black text-secondary mb-4">5.2<span class="text-2xl font-bold">k+</span></p>
+<p class="text-sm uppercase tracking-widest text-on-surface-variant">Mitra Profesional</p>
+</div>
+<div class="text-center">
+<p class="text-6xl font-black text-secondary mb-4">98<span class="text-2xl font-bold">%</span></p>
+<p class="text-sm uppercase tracking-widest text-on-surface-variant">Tingkat Kepuasan</p>
+</div>
+<div class="text-center">
+<p class="text-6xl font-black text-secondary mb-4">24<span class="text-2xl font-bold">/7</span></p>
+<p class="text-sm uppercase tracking-widest text-on-surface-variant">Dukungan Konserge</p>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-32 px-12 overflow-hidden relative">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-secondary/5 rounded-full blur-[120px] -z-10"></div>
+<div class="max-w-4xl mx-auto text-center">
+<h2 class="text-6xl font-bold tracking-tight mb-8">Siap Mengoptimalkan <br/> Hari Anda Bersama Kami?</h2>
+<p class="text-xl text-on-surface-variant font-light mb-12">Bergabunglah dengan ekosistem Solusi Kita dan rasakan kemewahan waktu yang sebenarnya.</p>
+<div class="flex flex-col sm:flex-row justify-center gap-6">
+<button class="bg-secondary text-on-secondary px-12 py-5 rounded-lg font-black text-xl hover:scale-105 transition-all shadow-2xl shadow-secondary/20">
+                        Pesan Sekarang
+                    </button>
+<button class="bg-surface-container-high text-on-surface px-12 py-5 rounded-lg font-black text-xl border border-outline-variant/30 hover:bg-surface-container-highest transition-all">
+                        Hubungi Konserge
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#10131a] w-full py-12 px-12 border-t border-[#e1e2ec]/5">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto">
+<p class="font-manrope text-xs tracking-tighter opacity-50 text-[#e1e2ec]">© 2024 Solusi Kita Corp. The Ultimate Practical Experience.</p>
+<div class="flex gap-8 mt-6 md:mt-0">
+<a class="text-[#e1e2ec]/50 hover:text-[#ecc06b] font-manrope text-xs tracking-tighter transition-all" href="#">Kebijakan Privasi</a>
+<a class="text-[#e1e2ec]/50 hover:text-[#ecc06b] font-manrope text-xs tracking-tighter transition-all" href="#">Syarat &amp; Ketentuan</a>
+<a class="text-[#e1e2ec]/50 hover:text-[#ecc06b] font-manrope text-xs tracking-tighter transition-all" href="#">Bantuan</a>
+</div>
+</div>
+</footer>
+<!-- SideNavBar (Hidden by default, can be toggled) -->
+<div class="fixed left-0 top-0 h-screen w-64 bg-[#10131a] border-r border-[#e1e2ec]/15 hidden md:flex flex-col py-8 px-4 z-40 transform -translate-x-full transition-transform duration-300" id="sideNav">
+<div class="mb-12 px-4">
+<h2 class="text-[#ecc06b] font-black uppercase tracking-widest text-sm">Member Solusi Kita</h2>
+<p class="text-[#e1e2ec]/40 text-[10px] uppercase tracking-[0.2em]">Elite Tier</p>
+</div>
+<div class="flex-grow space-y-2">
+<a class="flex items-center gap-4 py-3 px-4 rounded-lg bg-[#ecc06b]/10 text-[#ecc06b] border-r-4 border-[#ecc06b] font-manrope text-sm uppercase tracking-widest" href="#"><span class="material-symbols-outlined">dashboard</span> Dashboard Utama</a>
+<a class="flex items-center gap-4 py-3 px-4 rounded-lg text-[#e1e2ec]/40 hover:text-[#e1e2ec] hover:bg-white/5 transition-all font-manrope text-sm uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">school</span> Guru Privat
+            </a>
+<a class="flex items-center gap-4 py-3 px-4 rounded-lg text-[#e1e2ec]/40 hover:text-[#e1e2ec] hover:bg-white/5 transition-all font-manrope text-sm uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">home_repair_service</span> Mekanik
+            </a>
+<a class="flex items-center gap-4 py-3 px-4 rounded-lg text-[#e1e2ec]/40 hover:text-[#e1e2ec] hover:bg-white/5 transition-all font-manrope text-sm uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">directions_car</span> Supir Pribadi
+            </a>
+</div>
+<div class="mt-auto space-y-2">
+<button class="w-full py-4 bg-secondary/10 text-secondary rounded-lg font-bold text-xs uppercase tracking-widest mb-6">Hubungi Konserge</button>
+<a class="flex items-center gap-4 py-3 px-4 text-[#e1e2ec]/40 hover:text-[#e1e2ec] transition-all font-manrope text-xs uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">settings</span> Pengaturan
+            </a>
+<a class="flex items-center gap-4 py-3 px-4 text-[#e1e2ec]/40 hover:text-[#e1e2ec] transition-all font-manrope text-xs uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">logout</span> Keluar
+            </a>
+</div>
+</div>
+<!-- Sovereign Action Bar (Floating) -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-surface-container-low/80 backdrop-blur-xl px-8 py-4 rounded-full border border-outline-variant/20 flex items-center gap-12 z-50 shadow-2xl">
+<button class="flex items-center gap-2 text-secondary group">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">call</span>
+<span class="text-xs font-bold uppercase tracking-widest">Bantuan Cepat</span>
+</button>
+<div class="w-px h-4 bg-outline-variant/30"></div>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined">schedule</span>
+<span class="text-xs font-bold uppercase tracking-widest">Jadwal</span>
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined">location_on</span>
+<span class="text-xs font-bold uppercase tracking-widest">Lacak</span>
+</button>
+</div>
+</body></html>

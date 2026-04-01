@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0f3f8c;
+  --color-primary-container: #2e6ccf;
+  --color-on-primary-container: #dbe8ff;
+  --color-secondary: #0b8f7b;
+  --color-secondary-container: #1aa48f;
+  --color-tertiary: #1f3557;
+  --color-tertiary-container: #314b73;
+  --color-background: #f3f6fb;
+  --color-surface: #f6f8fc;
+  --color-surface-bright: #ffffff;
+  --color-surface-dim: #d9e0ea;
+  --color-surface-variant: #e8edf5;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eef3fa;
+  --color-surface-container: #e7edf6;
+  --color-surface-container-high: #dfe7f2;
+  --color-surface-container-highest: #d7e0ee;
+  --color-on-surface: #102033;
+  --color-on-surface-variant: #40516a;
+  --color-outline: #6e7f96;
+  --color-outline-variant: #c4cfde;
+  
+  --font-headline: "Sora", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+}
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    @apply text-on-surface font-body antialiased;
+    background:
+      radial-gradient(1000px 500px at 0% 0%, rgba(46, 108, 207, 0.12) 0%, rgba(46, 108, 207, 0) 65%),
+      radial-gradient(900px 450px at 100% 15%, rgba(11, 143, 123, 0.08) 0%, rgba(11, 143, 123, 0) 60%),
+      linear-gradient(180deg, #f8fbff 0%, #f2f6fc 45%, #edf3fb 100%);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-headline;
+    letter-spacing: -0.02em;
+  }
+}
+
+.app-shell {
+  position: relative;
+}
+
+.app-shell::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(140, 162, 196, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(140, 162, 196, 0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at 50% 20%, black 0%, transparent 85%);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 12px 40px -24px rgba(18, 46, 92, 0.45);
+}
+
+.section-frame {
+  border: 1px solid rgba(196, 207, 222, 0.5);
+  box-shadow: 0 16px 48px -30px rgba(20, 52, 103, 0.35);
+}
+
+.glass-nav {
+  @apply bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-blue-100/10 dark:border-blue-900/10;
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #00327d 0%, #0047ab 100%);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}

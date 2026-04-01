@@ -26,6 +26,9 @@ const categories = [
   { name: "Pertanian & Peternakan", icon: <Wheat size={16} /> }
 ];
 
+const COMMUNITY_WHATSAPP = '62812000000';
+const buildWhatsAppLink = (text) => `https://wa.me/${COMMUNITY_WHATSAPP}?text=${encodeURIComponent(text)}`;
+
 // --- Detail Page Component ---
 
 const ProfileDetailPage = ({ profileId, onBack, members }) => {
@@ -55,11 +58,11 @@ const ProfileDetailPage = ({ profileId, onBack, members }) => {
             </div>
             
             <div className="grid grid-cols-2 gap-4">
-                <a href={`https://wa.me/${profile.contact}`} target="_blank" className="flex flex-col items-center justify-center p-8 bg-green-50 text-green-600 rounded-[2.5rem] hover:bg-green-600 hover:text-white transition-all shadow-sm">
+                <a href={`https://wa.me/${profile.contact}`} target="_blank" rel="noreferrer" className="flex flex-col items-center justify-center p-8 bg-green-50 text-green-600 rounded-[2.5rem] hover:bg-green-600 hover:text-white transition-all shadow-sm">
                     <MessageCircle size={32} className="mb-2" />
                     <span className="font-black text-xs uppercase tracking-widest">WhatsApp</span>
                 </a>
-                <a href={`https://instagram.com/${profile.ig}`} target="_blank" className="flex flex-col items-center justify-center p-8 bg-pink-50 text-pink-600 rounded-[2.5rem] hover:bg-pink-600 hover:text-white transition-all shadow-sm">
+                <a href={`https://instagram.com/${profile.ig}`} target="_blank" rel="noreferrer" className="flex flex-col items-center justify-center p-8 bg-pink-50 text-pink-600 rounded-[2.5rem] hover:bg-pink-600 hover:text-white transition-all shadow-sm">
                     <Instagram size={32} className="mb-2" />
                     <span className="font-black text-xs uppercase tracking-widest">Instagram</span>
                 </a>
@@ -120,9 +123,14 @@ const ProfileDetailPage = ({ profileId, onBack, members }) => {
                 <h3 className="text-xs font-black text-primary uppercase tracking-[0.3em] mb-10 pb-4 border-b border-outline-variant/30">Kolaborasi & Penawaran</h3>
                 <div className="bg-surface-container-high/30 p-10 rounded-[3rem] text-center border-2 border-dashed border-outline-variant/50">
                     <p className="text-on-surface-variant font-bold mb-8">Tertarik bekerja sama dengan {profile.name}?</p>
-                    <button className="bg-primary text-white px-12 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-secondary transition-all shadow-xl">
+                    <a
+                      href={buildWhatsAppLink(`Halo Tim Medan Business, saya tertarik kolaborasi dengan ${profile.name} (${profile.business}). Mohon info langkah berikutnya.`)}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex bg-primary text-white px-12 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-secondary transition-all shadow-xl"
+                    >
                         Kirim Pesan Penawaran Kini
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -486,9 +494,14 @@ const JoinPage = () => (
                  </div>
                  <input className="w-full bg-surface-container-low border-none rounded-3xl p-8 focus:ring-8 focus:ring-primary/10 text-xl font-bold transition-all" placeholder="Link Profil Instagram / LinkedIn" />
                  <textarea className="w-full bg-surface-container-low border-none rounded-[3rem] p-10 focus:ring-8 focus:ring-primary/10 text-xl font-bold transition-all min-h-[250px]" placeholder="Deskripsikan nilai yang ingin Anda tawarkan kepada komunitas..." />
-                 <button type="button" className="w-full bg-primary text-white py-8 rounded-[2rem] font-black text-2xl uppercase tracking-widest hover:bg-secondary hover:shadow-3xl hover:-translate-y-2 transition-all shadow-2xl">
+                  <a
+                    href={buildWhatsAppLink('Halo Tim Medan Business, saya ingin mengajukan aplikasi keanggotaan. Mohon panduannya.')}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-full inline-flex justify-center bg-primary text-white py-8 rounded-[2rem] font-black text-2xl uppercase tracking-widest hover:bg-secondary hover:shadow-3xl hover:-translate-y-2 transition-all shadow-2xl"
+                  >
                     Ajukan Aplikasi Keanggotaan
-                 </button>
+                  </a>
              </form>
         </div>
     </div>
@@ -534,9 +547,14 @@ const OpportunitiesPage = ({ opportunities }) => (
                 <h1 className="text-8xl font-black text-primary tracking-tighter mb-6 leading-none">Peluang & <br/><span className="text-secondary">Sinergi Bisnis.</span></h1>
                 <p className="text-2xl text-on-surface-variant max-w-2xl font-medium opacity-60">Ruang kolaborasi strategis bagi anggota untuk berbagi kebutuhan suplai dan proyek besar.</p>
             </div>
-            <button className="bg-primary text-white p-12 rounded-[2.5rem] font-black uppercase tracking-widest text-lg hover:shadow-4xl transition-all shadow-2xl flex items-center gap-6">
+            <a
+              href={buildWhatsAppLink('Halo Tim Medan Business, saya ingin posting peluang kolaborasi bisnis di komunitas.')}
+              target="_blank"
+              rel="noreferrer"
+              className="bg-primary text-white p-12 rounded-[2.5rem] font-black uppercase tracking-widest text-lg hover:shadow-4xl transition-all shadow-2xl flex items-center gap-6"
+            >
                 <Megaphone size={32} /> Posting Peluang
-            </button>
+            </a>
         </div>
 
         <div className="grid gap-12">
@@ -769,7 +787,7 @@ export default function App() {
               <a href="#" className="w-16 h-16 rounded-[2rem] bg-surface-container-high flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all shadow-xl">
                 <Facebook size={32} />
               </a>
-              <a href="#" className="w-16 h-16 rounded-[2rem] bg-surface-container-high flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all shadow-xl">
+              <a href={buildWhatsAppLink('Halo Medan Business, saya ingin terhubung dan mendapatkan info komunitas.')} target="_blank" rel="noreferrer" className="w-16 h-16 rounded-[2rem] bg-surface-container-high flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all shadow-xl">
                 <Share2 size={32} />
               </a>
             </div>
@@ -802,6 +820,24 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      <a
+        href={buildWhatsAppLink('Halo Tim Medan Business, saya ingin konsultasi cepat terkait keanggotaan dan kolaborasi.')}
+        target="_blank"
+        rel="noreferrer"
+        className="fixed bottom-5 right-5 z-[80] group"
+        aria-label="Hubungi via WhatsApp"
+      >
+        <div className="flex items-center gap-3 rounded-full bg-[#25D366] text-white pl-4 pr-5 py-3 shadow-[0_18px_40px_-18px_rgba(37,211,102,0.8)] hover:scale-105 transition-all">
+          <span className="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center">
+            <MessageCircle size={22} />
+          </span>
+          <div className="hidden sm:block leading-none">
+            <p className="text-[10px] uppercase font-black tracking-widest opacity-80">CTWA</p>
+            <p className="text-sm font-black">Chat WhatsApp</p>
+          </div>
+        </div>
+      </a>
     </div>
   );
 }

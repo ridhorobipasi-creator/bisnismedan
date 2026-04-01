@@ -31,7 +31,7 @@ const buildWhatsAppLink = (text) => `https://wa.me/${COMMUNITY_WHATSAPP}?text=${
 
 // --- Profile Pages ---
 const ProfileImage = ({ src, fallback, className }) => (
-  src ? <img src={src} alt={fallback} className={className} /> : <div className="text-primary font-black text-[6rem] select-none opacity-30">{fallback}</div>
+  src ? <img src={src} alt={fallback} className={className} /> : <div className="text-primary font-black text-5xl sm:text-6xl select-none opacity-30">{fallback}</div>
 );
 
 const PersonalProfilePage = ({ members }) => {
@@ -39,20 +39,20 @@ const PersonalProfilePage = ({ members }) => {
   const navigate = useNavigate();
   const profile = useMemo(() => members.find(m => String(m.id) === id), [id, members]);
 
-  if (!profile) return <div className="p-20 text-center">Profil pribadi tidak ditemukan.</div>;
+  if (!profile) return <div className="p-8 sm:p-16 text-center">Profil pribadi tidak ditemukan.</div>;
 
   return (
     <div className="animate-in fade-in duration-500 max-w-6xl mx-auto px-6 sm:px-8 py-16">
       <button onClick={() => navigate('/members')} className="flex items-center gap-2 text-primary font-black uppercase tracking-widest text-xs mb-10 hover:gap-4 transition-all">
         <ChevronLeft size={20} /> Kembali ke Direktori Anggota
       </button>
-      <div className="grid lg:grid-cols-12 gap-10">
+      <div className="grid lg:grid-cols-12 gap-6 sm:gap-10">
         <div className="lg:col-span-4">
-          <div className="bg-white rounded-[2rem] p-8 border border-outline-variant/20 shadow-lg text-center">
-            <div className="w-48 h-48 mx-auto rounded-full border-4 border-surface-container-high overflow-hidden bg-surface-container-low flex items-center justify-center mb-6">
+          <div className="bg-white rounded-[2rem] p-6 sm:p-8 border border-outline-variant/20 shadow-lg text-center">
+            <div className="w-32 h-32 sm:w-48 sm:h-48 mx-auto rounded-full border-4 border-surface-container-high overflow-hidden bg-surface-container-low flex items-center justify-center mb-6">
               <ProfileImage src={profile.profilePhoto} fallback={profile.name[0]} className="w-full h-full object-cover" />
             </div>
-            <h1 className="text-3xl font-black text-primary tracking-tight">{profile.name}</h1>
+            <h1 className="text-2xl sm:text-3xl font-black text-primary tracking-tight">{profile.name}</h1>
             <p className="text-on-surface-variant font-bold mt-2">{profile.role || 'Professional Member'}</p>
             <div className="mt-6 flex justify-center gap-3">
               <a href={`https://wa.me/${profile.contact}`} target="_blank" rel="noreferrer" className="px-4 py-2 rounded-xl bg-green-100 text-green-700 font-black text-xs uppercase tracking-widest">WhatsApp</a>
@@ -61,12 +61,12 @@ const PersonalProfilePage = ({ members }) => {
           </div>
         </div>
         <div className="lg:col-span-8 space-y-6">
-          <div className="bg-white rounded-[2rem] p-8 border border-outline-variant/20 shadow-sm">
+          <div className="bg-white rounded-[2rem] p-6 sm:p-8 border border-outline-variant/20 shadow-sm">
             <h3 className="text-xs font-black text-primary uppercase tracking-[0.3em] mb-4">Biodata Pribadi</h3>
             <p className="text-on-surface-variant leading-relaxed font-medium">{profile.personalBio || 'Profil pribadi akan ditampilkan setelah biodata diisi oleh admin.'}</p>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-[2rem] p-7 border border-outline-variant/20 shadow-sm">
+            <div className="bg-white rounded-[2rem] p-6 sm:p-7 border border-outline-variant/20 shadow-sm">
               <h4 className="text-xs font-black text-outline uppercase tracking-widest mb-4">Informasi</h4>
               <div className="space-y-3 text-sm font-semibold text-on-surface-variant">
                 <p>Usia: {profile.age || '-'}</p>
@@ -74,7 +74,7 @@ const PersonalProfilePage = ({ members }) => {
                 <p>Alamat: {profile.address || '-'}</p>
               </div>
             </div>
-            <div className="bg-white rounded-[2rem] p-7 border border-outline-variant/20 shadow-sm">
+            <div className="bg-white rounded-[2rem] p-6 sm:p-7 border border-outline-variant/20 shadow-sm">
               <h4 className="text-xs font-black text-outline uppercase tracking-widest mb-4">Unit Bisnis</h4>
               <p className="font-black text-primary text-lg">{profile.business}</p>
               <p className="text-sm text-on-surface-variant mt-2">Kategori: {profile.category}</p>
@@ -94,30 +94,30 @@ const BusinessProfilePage = ({ members }) => {
   const navigate = useNavigate();
   const profile = useMemo(() => members.find(m => String(m.id) === id), [id, members]);
 
-  if (!profile) return <div className="p-20 text-center">Profil bisnis tidak ditemukan.</div>;
+  if (!profile) return <div className="p-8 sm:p-16 text-center">Profil bisnis tidak ditemukan.</div>;
 
   return (
     <div className="animate-in fade-in duration-500 max-w-6xl mx-auto px-6 sm:px-8 py-16">
       <button onClick={() => navigate('/business')} className="flex items-center gap-2 text-primary font-black uppercase tracking-widest text-xs mb-10 hover:gap-4 transition-all">
         <ChevronLeft size={20} /> Kembali ke Katalog Bisnis
       </button>
-      <div className="grid lg:grid-cols-12 gap-10">
+      <div className="grid lg:grid-cols-12 gap-6 sm:gap-10">
         <div className="lg:col-span-5">
           <div className="aspect-[4/3] rounded-[2rem] overflow-hidden bg-surface-container-low border border-outline-variant/20 shadow-lg flex items-center justify-center">
             <ProfileImage src={profile.businessPhoto || profile.profilePhoto} fallback={profile.business?.[0] || profile.name[0]} className="w-full h-full object-cover" />
           </div>
         </div>
         <div className="lg:col-span-7 space-y-6">
-          <div className="bg-white rounded-[2rem] p-8 border border-outline-variant/20 shadow-sm">
+          <div className="bg-white rounded-[2rem] p-6 sm:p-8 border border-outline-variant/20 shadow-sm">
             <div className="flex flex-wrap gap-3 mb-4">
               <span className="px-3 py-1 bg-primary/10 text-primary rounded-lg text-[10px] font-black uppercase tracking-widest">{profile.category}</span>
               <span className="px-3 py-1 bg-surface-container-high text-on-surface-variant rounded-lg text-[10px] font-black uppercase tracking-widest">Verified Member</span>
             </div>
-            <h1 className="text-4xl font-black text-primary tracking-tight mb-4">{profile.business}</h1>
+            <h1 className="text-3xl sm:text-4xl font-black text-primary tracking-tight mb-4">{profile.business}</h1>
             <p className="text-on-surface-variant font-medium leading-relaxed">{profile.businessBio || profile.description || 'Profil bisnis akan ditampilkan setelah data lengkap diisi admin.'}</p>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-[2rem] p-7 border border-outline-variant/20 shadow-sm">
+            <div className="bg-white rounded-[2rem] p-6 sm:p-7 border border-outline-variant/20 shadow-sm">
               <h4 className="text-xs font-black text-outline uppercase tracking-widest mb-4">Layanan Utama</h4>
               <ul className="space-y-2">
                 {(profile.services || ['Konsultasi Bisnis', 'Layanan Profesional']).map((svc, i) => (
@@ -125,7 +125,7 @@ const BusinessProfilePage = ({ members }) => {
                 ))}
               </ul>
             </div>
-            <div className="bg-primary rounded-[2rem] p-7 text-white shadow-sm">
+            <div className="bg-primary rounded-[2rem] p-6 sm:p-7 text-white shadow-sm">
               <h4 className="text-xs font-black uppercase tracking-widest mb-4 text-white/70">Kontak & Operasional</h4>
               <div className="space-y-3 text-sm font-semibold">
                 <p className="flex items-center gap-2"><MapPin size={16} /> {profile.address || profile.location || '-'}</p>
@@ -185,7 +185,7 @@ const HomePage = ({ onNavigate }) => (
           <div className="aspect-[4/3] rounded-[2.5rem] overflow-hidden transition-all duration-700 shadow-[0_40px_80px_-30px_rgba(0,50,125,0.25)] border-[10px] border-white">
             <img className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop" alt="The Workspace" />
           </div>
-          <div className="absolute -bottom-8 left-6 right-6 bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-outline-variant/25">
+          <div className="relative sm:absolute mt-4 sm:mt-0 sm:-bottom-8 left-0 sm:left-6 right-0 sm:right-6 bg-white/95 backdrop-blur-md p-4 sm:p-6 rounded-2xl shadow-xl border border-outline-variant/25">
             <p className="text-primary font-bold leading-relaxed text-sm sm:text-base">"Kami tidak sekadar membangun jaringan, kami mengkurasi kualitas kolaborasi."</p>
           </div>
         </div>
@@ -311,7 +311,7 @@ const BusinessCatalogPage = ({ searchTerm, setSearchTerm, selectedCategory, setS
     </div>
 
     {/* Modern Filters */}
-    <div className="sticky top-30 z-40 bg-background/85 backdrop-blur-2xl py-5 rounded-[2rem] shadow-xl shadow-primary/5 border border-outline-variant/10 px-6 mb-12">
+    <div className="sticky top-[10.75rem] md:top-32 z-40 bg-background/85 backdrop-blur-2xl py-5 rounded-[2rem] shadow-xl shadow-primary/5 border border-outline-variant/10 px-4 sm:px-6 mb-12">
         <div className="flex flex-col lg:flex-row gap-8 items-center">
             <div className="relative flex-grow w-full">
                 <Search className="absolute left-8 top-1/2 -translate-y-1/2 text-primary" size={24} />
@@ -693,10 +693,11 @@ export default function App() {
         <div className="glass-panel max-w-7xl mx-auto rounded-3xl px-6 sm:px-8 py-4 sm:py-5 flex justify-between items-center">
           <Link 
             to="/"
-            className="text-3xl font-black text-primary font-headline tracking-tighter cursor-pointer group flex items-center gap-4"
+            className="text-2xl sm:text-3xl font-black text-primary font-headline tracking-tighter cursor-pointer group flex items-center gap-3 sm:gap-4"
           >
-            <div className="bg-primary p-3 rounded-2xl group-hover:rotate-12 transition-transform shadow-2xl shadow-primary/30">
-                <Briefcase size={28} className="text-white" />
+            <div className="bg-primary p-2.5 sm:p-3 rounded-2xl group-hover:rotate-12 transition-transform shadow-2xl shadow-primary/30">
+                <Briefcase size={22} className="text-white sm:hidden" />
+                <Briefcase size={28} className="text-white hidden sm:block" />
             </div>
             <span className="hidden sm:inline bg-gradient-to-r from-primary to-primary-container bg-clip-text text-transparent">MEDAN BUSINESS</span>
           </Link>
@@ -722,7 +723,7 @@ export default function App() {
           <div className="flex items-center gap-8">
             <Link 
               to="/join"
-              className="bg-primary text-white px-7 sm:px-10 py-4 sm:py-5 rounded-2xl font-black text-[10px] sm:text-xs uppercase tracking-widest hover:bg-secondary hover:shadow-4xl transition-all duration-500 shadow-2xl shadow-primary/20"
+              className="bg-primary text-white px-5 sm:px-8 py-3 sm:py-4 rounded-2xl font-black text-[10px] sm:text-xs uppercase tracking-widest hover:bg-secondary hover:shadow-4xl transition-all duration-500 shadow-2xl shadow-primary/20"
             >
               Join Us
             </Link>
@@ -777,11 +778,11 @@ export default function App() {
       </main>
 
       {/* --- Footer Component --- */}
-      <footer className="pt-24 pb-16 px-4 sm:px-8 lg:px-10 mt-32">
-        <div className="max-w-7xl mx-auto bg-white/85 backdrop-blur-2xl rounded-[2.75rem] section-frame px-8 sm:px-12 lg:px-16 py-16 sm:py-20 flex flex-col lg:flex-row justify-between items-start gap-20">
+      <footer className="pt-16 pb-12 px-4 sm:px-8 lg:px-10 mt-20 sm:mt-24">
+        <div className="max-w-7xl mx-auto bg-white/85 backdrop-blur-2xl rounded-[2rem] sm:rounded-[2.75rem] section-frame px-6 sm:px-10 lg:px-16 py-12 sm:py-16 flex flex-col lg:flex-row justify-between items-start gap-12 sm:gap-20">
           <div className="space-y-12 max-w-md">
-            <div className="text-5xl font-black text-primary font-headline tracking-tighter leading-none">MEDAN <br/>BUSINESS GROUP</div>
-            <p className="text-2xl text-on-surface-variant leading-relaxed font-medium opacity-60">Kurasi profesional paling eksklusif untuk membangun masa depan industri Kota Medan melalui kolaborasi berkualitas.</p>
+            <div className="text-3xl sm:text-5xl font-black text-primary font-headline tracking-tighter leading-none">MEDAN <br/>BUSINESS GROUP</div>
+            <p className="text-base sm:text-2xl text-on-surface-variant leading-relaxed font-medium opacity-60">Kurasi profesional paling eksklusif untuk membangun masa depan industri Kota Medan melalui kolaborasi berkualitas.</p>
             <div className="flex gap-6">
               <a href="#" className="w-16 h-16 rounded-[2rem] bg-surface-container-high flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all shadow-xl">
                 <Instagram size={32} />
@@ -794,28 +795,28 @@ export default function App() {
               </a>
             </div>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-24 lg:gap-40">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-16 lg:gap-24">
             <div className="space-y-10">
               <h4 className="font-black text-primary uppercase text-xs tracking-[0.5em] opacity-40">PROFIL</h4>
               <div className="flex flex-col gap-6">
-                <Link to="/members" className="text-on-surface-variant hover:text-primary text-left text-xl font-black transition-colors">Anggota</Link>
-                <Link to="/business" className="text-on-surface-variant hover:text-primary text-left text-xl font-black transition-colors">Unit Bisnis</Link>
-                <Link to="/about" className="text-on-surface-variant hover:text-primary text-left text-xl font-black transition-colors">Visi & Misi</Link>
+                <Link to="/members" className="text-on-surface-variant hover:text-primary text-left text-base sm:text-xl font-black transition-colors">Anggota</Link>
+                <Link to="/business" className="text-on-surface-variant hover:text-primary text-left text-base sm:text-xl font-black transition-colors">Unit Bisnis</Link>
+                <Link to="/about" className="text-on-surface-variant hover:text-primary text-left text-base sm:text-xl font-black transition-colors">Visi & Misi</Link>
               </div>
             </div>
             <div className="space-y-10">
                <h4 className="font-black text-primary uppercase text-xs tracking-[0.5em] opacity-40">JARINGAN</h4>
                <div className="flex flex-col gap-6">
-                <Link to="/events" className="text-on-surface-variant hover:text-primary text-left text-xl font-black transition-colors">Agenda Kopdar</Link>
-                <Link to="/opportunities" className="text-on-surface-variant hover:text-primary text-left text-xl font-black transition-colors">Peluang Bisnis</Link>
-                <Link to="/resources" className="text-on-surface-variant hover:text-primary text-left text-xl font-black transition-colors">Sumber Daya</Link>
+                <Link to="/events" className="text-on-surface-variant hover:text-primary text-left text-base sm:text-xl font-black transition-colors">Agenda Kopdar</Link>
+                <Link to="/opportunities" className="text-on-surface-variant hover:text-primary text-left text-base sm:text-xl font-black transition-colors">Peluang Bisnis</Link>
+                <Link to="/resources" className="text-on-surface-variant hover:text-primary text-left text-base sm:text-xl font-black transition-colors">Sumber Daya</Link>
               </div>
             </div>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto mt-10 pt-8 px-2 flex flex-col md:flex-row justify-between items-center gap-8 text-outline text-[10px] font-black uppercase tracking-[0.25em] opacity-60">
+        <div className="max-w-7xl mx-auto mt-8 pt-6 px-2 flex flex-col md:flex-row justify-between items-center gap-6 text-outline text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] sm:tracking-[0.25em] opacity-60 text-center md:text-left">
           <span>© 2024 MEDAN COMMUNITY BUSINESS. PREMIUM CURATION.</span>
-          <div className="flex gap-12">
+          <div className="flex gap-5 sm:gap-12">
             <Link to="/admin" className="hover:text-primary transition-colors cursor-pointer">ADMIN CMS</Link>
             <a href="#" className="hover:text-primary transition-colors">LEGAL</a>
             <a href="#" className="hover:text-primary transition-colors">PRIVACY</a>
@@ -827,12 +828,12 @@ export default function App() {
         href={buildWhatsAppLink('Halo Tim Medan Business, saya ingin konsultasi cepat terkait keanggotaan dan kolaborasi.')}
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-5 right-5 z-[80] group"
+        className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-[80] group"
         aria-label="Hubungi via WhatsApp"
       >
-        <div className="flex items-center gap-3 rounded-full bg-[#25D366] text-white pl-4 pr-5 py-3 shadow-[0_18px_40px_-18px_rgba(37,211,102,0.8)] hover:scale-105 transition-all">
-          <span className="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center">
-            <MessageCircle size={22} />
+        <div className="flex items-center gap-3 rounded-full bg-[#25D366] text-white pl-3 sm:pl-4 pr-4 sm:pr-5 py-2.5 sm:py-3 shadow-[0_18px_40px_-18px_rgba(37,211,102,0.8)] hover:scale-105 transition-all">
+          <span className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/20 flex items-center justify-center">
+            <MessageCircle size={20} />
           </span>
           <div className="hidden sm:block leading-none">
             <p className="text-[10px] uppercase font-black tracking-widest opacity-80">CTWA</p>

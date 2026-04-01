@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { 
   Search, Users, Home, Briefcase, MapPin, 
   Instagram, Facebook, Clock, Filter, ChevronRight, 
@@ -29,110 +29,115 @@ const categories = [
 const COMMUNITY_WHATSAPP = '62812000000';
 const buildWhatsAppLink = (text) => `https://wa.me/${COMMUNITY_WHATSAPP}?text=${encodeURIComponent(text)}`;
 
-// --- Detail Page Component ---
+// --- Profile Pages ---
+const ProfileImage = ({ src, fallback, className }) => (
+  src ? <img src={src} alt={fallback} className={className} /> : <div className="text-primary font-black text-[6rem] select-none opacity-30">{fallback}</div>
+);
 
-const ProfileDetailPage = ({ profileId, onBack, members }) => {
-  const profile = useMemo(() => members.find(m => m.id === profileId), [profileId, members]);
+const PersonalProfilePage = ({ members }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const profile = useMemo(() => members.find(m => String(m.id) === id), [id, members]);
 
-  if (!profile) return <div className="p-20 text-center">Profil tidak ditemukan.</div>;
+  if (!profile) return <div className="p-20 text-center">Profil pribadi tidak ditemukan.</div>;
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-10 duration-700 max-w-6xl mx-auto px-8 py-20">
-      <button onClick={onBack} className="flex items-center gap-2 text-primary font-black uppercase tracking-widest text-xs mb-12 hover:gap-4 transition-all">
-        <ChevronLeft size={20} /> Kembali ke Direktori
+    <div className="animate-in fade-in duration-500 max-w-6xl mx-auto px-6 sm:px-8 py-16">
+      <button onClick={() => navigate('/members')} className="flex items-center gap-2 text-primary font-black uppercase tracking-widest text-xs mb-10 hover:gap-4 transition-all">
+        <ChevronLeft size={20} /> Kembali ke Direktori Anggota
       </button>
-
-      <div className="grid lg:grid-cols-12 gap-16">
-        {/* Left Column: Visuals & Mini Bio */}
-        <div className="lg:col-span-5 space-y-8">
-            <div className="aspect-[4/5] rounded-[4rem] bg-surface-container-high overflow-hidden shadow-3xl border-[12px] border-white relative group">
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent flex items-end p-12">
-                   <div className="text-white">
-                      <h1 className="text-5xl font-black tracking-tighter mb-2">{profile.name}</h1>
-                      <p className="text-lg font-bold opacity-80">{profile.business}</p>
-                   </div>
-                </div>
-                <div className="w-full h-full flex items-center justify-center bg-primary-container/10">
-                   <div className="text-primary font-black text-[15rem] leading-none select-none opacity-20">{profile.name[0]}</div>
-                </div>
+      <div className="grid lg:grid-cols-12 gap-10">
+        <div className="lg:col-span-4">
+          <div className="bg-white rounded-[2rem] p-8 border border-outline-variant/20 shadow-lg text-center">
+            <div className="w-48 h-48 mx-auto rounded-full border-4 border-surface-container-high overflow-hidden bg-surface-container-low flex items-center justify-center mb-6">
+              <ProfileImage src={profile.profilePhoto} fallback={profile.name[0]} className="w-full h-full object-cover" />
             </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-                <a href={`https://wa.me/${profile.contact}`} target="_blank" rel="noreferrer" className="flex flex-col items-center justify-center p-8 bg-green-50 text-green-600 rounded-[2.5rem] hover:bg-green-600 hover:text-white transition-all shadow-sm">
-                    <MessageCircle size={32} className="mb-2" />
-                    <span className="font-black text-xs uppercase tracking-widest">WhatsApp</span>
-                </a>
-                <a href={`https://instagram.com/${profile.ig}`} target="_blank" rel="noreferrer" className="flex flex-col items-center justify-center p-8 bg-pink-50 text-pink-600 rounded-[2.5rem] hover:bg-pink-600 hover:text-white transition-all shadow-sm">
-                    <Instagram size={32} className="mb-2" />
-                    <span className="font-black text-xs uppercase tracking-widest">Instagram</span>
-                </a>
+            <h1 className="text-3xl font-black text-primary tracking-tight">{profile.name}</h1>
+            <p className="text-on-surface-variant font-bold mt-2">{profile.role || 'Professional Member'}</p>
+            <div className="mt-6 flex justify-center gap-3">
+              <a href={`https://wa.me/${profile.contact}`} target="_blank" rel="noreferrer" className="px-4 py-2 rounded-xl bg-green-100 text-green-700 font-black text-xs uppercase tracking-widest">WhatsApp</a>
+              <a href={`https://instagram.com/${profile.ig}`} target="_blank" rel="noreferrer" className="px-4 py-2 rounded-xl bg-pink-100 text-pink-700 font-black text-xs uppercase tracking-widest">Instagram</a>
             </div>
+          </div>
         </div>
-
-        {/* Right Column: Detailed Info */}
-        <div className="lg:col-span-7 space-y-12">
-            <header>
-                <div className="flex flex-wrap gap-3 mb-6">
-                    <span className="px-4 py-2 bg-primary/10 text-primary rounded-xl text-[10px] font-black uppercase tracking-widest border border-primary/20">{profile.category}</span>
-                    <span className="px-4 py-2 bg-surface-container-high text-on-surface-variant rounded-xl text-[10px] font-black uppercase tracking-widest border border-outline-variant/30">Verified Member</span>
-                </div>
-                <h2 className="text-6xl font-black text-primary tracking-tighter leading-none mb-8">Eksplorasi Bisnis & <br/>Keahlian Personal.</h2>
-            </header>
-
-            <div className="space-y-10 group">
-                <div className="p-10 rounded-[3rem] bg-white shadow-xl border border-outline-variant/10 relative overflow-hidden">
-                    <h3 className="text-xs font-black text-primary uppercase tracking-[0.3em] mb-6 block">Tentang Unit Bisnis</h3>
-                    <p className="text-xl text-on-surface-variant font-medium leading-relaxed opacity-80">
-                        {profile.description || "Individu profesional yang memiliki dedikasi tinggi dalam mengembangkan industri lokal di Medan. Fokus pada kualitas dan kepuasan mitra bisnis."}
-                    </p>
-                    <Quote className="absolute -right-4 -bottom-4 text-primary opacity-5" size={100} />
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-8">
-                    <div className="p-10 rounded-[3rem] bg-surface-container-low border border-outline-variant/20">
-                        <h4 className="text-[10px] font-black text-outline uppercase tracking-widest mb-6">Layanan Utama</h4>
-                        <ul className="space-y-4">
-                            {(profile.services || ["Konsultasi Bisnis", "Layanan Profesional", "Kemitraan Jangka Panjang"]).map((svc, i) => (
-                                <li key={i} className="flex items-center gap-3 font-bold text-primary">
-                                    <CheckCircle2 size={18} className="text-secondary" /> {svc}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="p-10 rounded-[3rem] bg-primary text-white shadow-2xl">
-                        <h4 className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-6">Informasi Kontak</h4>
-                        <div className="space-y-6">
-                             <div>
-                                <span className="text-[10px] font-bold opacity-50 block mb-1">ALAMAT</span>
-                                <div className="flex items-center gap-3 text-sm font-bold">
-                                    <MapPin size={18} /> {profile.address || profile.location}
-                                </div>
-                             </div>
-                             <div>
-                                <span className="text-[10px] font-bold opacity-50 block mb-1">PENGALAMAN</span>
-                                <div className="flex items-center gap-3 text-sm font-bold">
-                                    <Clock size={18} /> {profile.duration} Beroperasi
-                                </div>
-                             </div>
-                        </div>
-                    </div>
-                </div>
+        <div className="lg:col-span-8 space-y-6">
+          <div className="bg-white rounded-[2rem] p-8 border border-outline-variant/20 shadow-sm">
+            <h3 className="text-xs font-black text-primary uppercase tracking-[0.3em] mb-4">Biodata Pribadi</h3>
+            <p className="text-on-surface-variant leading-relaxed font-medium">{profile.personalBio || 'Profil pribadi akan ditampilkan setelah biodata diisi oleh admin.'}</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-[2rem] p-7 border border-outline-variant/20 shadow-sm">
+              <h4 className="text-xs font-black text-outline uppercase tracking-widest mb-4">Informasi</h4>
+              <div className="space-y-3 text-sm font-semibold text-on-surface-variant">
+                <p>Usia: {profile.age || '-'}</p>
+                <p>Lokasi: {profile.location || '-'}</p>
+                <p>Alamat: {profile.address || '-'}</p>
+              </div>
             </div>
-
-            <div className="pt-8 block">
-                <h3 className="text-xs font-black text-primary uppercase tracking-[0.3em] mb-10 pb-4 border-b border-outline-variant/30">Kolaborasi & Penawaran</h3>
-                <div className="bg-surface-container-high/30 p-10 rounded-[3rem] text-center border-2 border-dashed border-outline-variant/50">
-                    <p className="text-on-surface-variant font-bold mb-8">Tertarik bekerja sama dengan {profile.name}?</p>
-                    <a
-                      href={buildWhatsAppLink(`Halo Tim Medan Business, saya tertarik kolaborasi dengan ${profile.name} (${profile.business}). Mohon info langkah berikutnya.`)}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex bg-primary text-white px-12 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-secondary transition-all shadow-xl"
-                    >
-                        Kirim Pesan Penawaran Kini
-                    </a>
-                </div>
+            <div className="bg-white rounded-[2rem] p-7 border border-outline-variant/20 shadow-sm">
+              <h4 className="text-xs font-black text-outline uppercase tracking-widest mb-4">Unit Bisnis</h4>
+              <p className="font-black text-primary text-lg">{profile.business}</p>
+              <p className="text-sm text-on-surface-variant mt-2">Kategori: {profile.category}</p>
+              <button onClick={() => navigate(`/profile/business/${profile.id}`)} className="mt-5 px-5 py-3 bg-primary text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-secondary transition-all">
+                Lihat Profil Bisnis
+              </button>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const BusinessProfilePage = ({ members }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const profile = useMemo(() => members.find(m => String(m.id) === id), [id, members]);
+
+  if (!profile) return <div className="p-20 text-center">Profil bisnis tidak ditemukan.</div>;
+
+  return (
+    <div className="animate-in fade-in duration-500 max-w-6xl mx-auto px-6 sm:px-8 py-16">
+      <button onClick={() => navigate('/business')} className="flex items-center gap-2 text-primary font-black uppercase tracking-widest text-xs mb-10 hover:gap-4 transition-all">
+        <ChevronLeft size={20} /> Kembali ke Katalog Bisnis
+      </button>
+      <div className="grid lg:grid-cols-12 gap-10">
+        <div className="lg:col-span-5">
+          <div className="aspect-[4/3] rounded-[2rem] overflow-hidden bg-surface-container-low border border-outline-variant/20 shadow-lg flex items-center justify-center">
+            <ProfileImage src={profile.businessPhoto || profile.profilePhoto} fallback={profile.business?.[0] || profile.name[0]} className="w-full h-full object-cover" />
+          </div>
+        </div>
+        <div className="lg:col-span-7 space-y-6">
+          <div className="bg-white rounded-[2rem] p-8 border border-outline-variant/20 shadow-sm">
+            <div className="flex flex-wrap gap-3 mb-4">
+              <span className="px-3 py-1 bg-primary/10 text-primary rounded-lg text-[10px] font-black uppercase tracking-widest">{profile.category}</span>
+              <span className="px-3 py-1 bg-surface-container-high text-on-surface-variant rounded-lg text-[10px] font-black uppercase tracking-widest">Verified Member</span>
+            </div>
+            <h1 className="text-4xl font-black text-primary tracking-tight mb-4">{profile.business}</h1>
+            <p className="text-on-surface-variant font-medium leading-relaxed">{profile.businessBio || profile.description || 'Profil bisnis akan ditampilkan setelah data lengkap diisi admin.'}</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-[2rem] p-7 border border-outline-variant/20 shadow-sm">
+              <h4 className="text-xs font-black text-outline uppercase tracking-widest mb-4">Layanan Utama</h4>
+              <ul className="space-y-2">
+                {(profile.services || ['Konsultasi Bisnis', 'Layanan Profesional']).map((svc, i) => (
+                  <li key={i} className="flex items-center gap-2 text-sm font-semibold text-primary"><CheckCircle2 size={16} /> {svc}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-primary rounded-[2rem] p-7 text-white shadow-sm">
+              <h4 className="text-xs font-black uppercase tracking-widest mb-4 text-white/70">Kontak & Operasional</h4>
+              <div className="space-y-3 text-sm font-semibold">
+                <p className="flex items-center gap-2"><MapPin size={16} /> {profile.address || profile.location || '-'}</p>
+                <p className="flex items-center gap-2"><Clock size={16} /> {profile.duration || '-'} Beroperasi</p>
+                <p className="flex items-center gap-2"><UserCircle size={16} /> PIC: {profile.name}</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <a href={buildWhatsAppLink(`Halo Tim Medan Business, saya tertarik kolaborasi dengan ${profile.business}. Mohon info detailnya.`)} target="_blank" rel="noreferrer" className="px-6 py-3 rounded-xl bg-primary text-white font-black text-xs uppercase tracking-widest hover:bg-secondary transition-all">Hubungi untuk Kolaborasi</a>
+            <button onClick={() => navigate(`/profile/personal/${profile.id}`)} className="px-6 py-3 rounded-xl border border-primary/20 text-primary font-black text-xs uppercase tracking-widest hover:bg-primary/5 transition-all">Lihat Profil Pribadi</button>
+          </div>
         </div>
       </div>
     </div>
@@ -163,13 +168,13 @@ const HomePage = ({ onNavigate }) => (
           </p>
           <div className="flex flex-wrap gap-4">
             <button 
-              onClick={() => onNavigate('business_catalog')}
+              onClick={() => onNavigate('/business')}
               className="bg-primary text-white px-8 py-4 rounded-2xl font-black text-base hover:shadow-2xl transition-all transform hover:-translate-y-1 active:scale-95 shadow-primary/20 shadow-lg flex items-center gap-3"
             >
               Katalog Bisnis <Store size={24} />
             </button>
             <button 
-              onClick={() => onNavigate('members')}
+              onClick={() => onNavigate('/members')}
               className="bg-white text-primary border-2 border-primary/10 px-8 py-4 rounded-2xl font-black text-base hover:bg-primary-container/5 transition-all shadow-sm flex items-center gap-3"
             >
               Kenali Anggota <Users size={24} />
@@ -255,8 +260,12 @@ const MembersPersonalPage = ({ searchTerm, setSearchTerm, filteredMembers, onSel
                 <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-100 transition-opacity">
                     <Verified className="text-primary" size={32} />
                 </div>
-        <div className="w-28 h-28 rounded-full mx-auto mb-7 border-4 border-surface-container-high bg-primary-container shadow-lg flex items-center justify-center overflow-hidden scale-100 group-hover:scale-105 transition-transform duration-500">
-          <div className="text-primary font-black text-4xl select-none">{member.name[0]}</div>
+                <div className="w-28 h-28 rounded-full mx-auto mb-7 border-4 border-surface-container-high bg-primary-container shadow-lg flex items-center justify-center overflow-hidden scale-100 group-hover:scale-105 transition-transform duration-500">
+                    {member.profilePhoto ? (
+                      <img src={member.profilePhoto} alt={member.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="text-primary font-black text-4xl select-none">{member.name[0]}</div>
+                    )}
                 </div>
         <h3 className="text-2xl font-black text-primary mb-2 tracking-tight group-hover:text-secondary transition-colors leading-none">{member.name}</h3>
         <p className="text-on-surface-variant font-black text-[10px] uppercase tracking-[0.3em] mb-7 opacity-50">{member.age !== '-' ? `${member.age} TAHUN` : 'ANGGOTA AKTIF'}</p>
@@ -278,7 +287,7 @@ const MembersPersonalPage = ({ searchTerm, setSearchTerm, filteredMembers, onSel
                         onClick={() => onSelectProfile(member.id)}
                       className="w-full py-4 bg-primary text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-secondary transition-all shadow-xl shadow-primary/20"
                     >
-                        Lihat Bio & Detail
+                        Lihat Profil Pribadi
                     </button>
                 </div>
             </div>
@@ -334,7 +343,8 @@ const BusinessCatalogPage = ({ searchTerm, setSearchTerm, selectedCategory, setS
         {filteredMembers.map(member => (
         <article key={member.id} className="group bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-3xl transition-all duration-500 border border-outline-variant/10 flex flex-col hover:-translate-y-2">
           <div className="h-52 bg-surface-container-high relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary-container opacity-40 group-hover:scale-110 transition-transform duration-1000"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary-container opacity-35 group-hover:scale-110 transition-transform duration-1000"></div>
+            {(member.businessPhoto || member.profilePhoto) && <img src={member.businessPhoto || member.profilePhoto} alt={member.business} className="absolute inset-0 w-full h-full object-cover" />}
                     <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-30 transition-all duration-700">
                         {React.cloneElement(categories.find(c => c.name === member.category)?.icon || <Briefcase />, { size: 180 })}
                     </div>
@@ -369,7 +379,7 @@ const BusinessCatalogPage = ({ searchTerm, setSearchTerm, selectedCategory, setS
                             onClick={() => onSelectProfile(member.id)}
                           className="flex-grow py-4 bg-primary text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-secondary transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-3"
                         >
-                            Lihat Unit & Kontak <ArrowRight size={16} />
+                            Lihat Profil Bisnis <ArrowRight size={16} />
                         </button>
                     </div>
                 </div>
@@ -634,7 +644,6 @@ const AdminLoginPage = ({ onLogin }) => {
 export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedProfileId, setSelectedProfileId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Semua');
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
@@ -657,7 +666,7 @@ export default function App() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [location.pathname, selectedProfileId]);
+  }, [location.pathname]);
 
   const filteredMembers = useMemo(() => {
     return appData.members.filter(member => {
@@ -668,9 +677,8 @@ export default function App() {
     });
   }, [searchTerm, selectedCategory, appData.members]);
 
-  const handleSelectProfile = (id) => {
-    setSelectedProfileId(id);
-    navigate('/detail');
+  const handleSelectProfile = (id, mode = 'business') => {
+    navigate(`/profile/${mode}/${id}`);
   };
 
   // Skip rendering the full layout for Admin routes
@@ -691,7 +699,6 @@ export default function App() {
           <Link 
             to="/"
             className="text-3xl font-black text-primary font-headline tracking-tighter cursor-pointer group flex items-center gap-4"
-            onClick={() => setSelectedProfileId(null)}
           >
             <div className="bg-primary p-3 rounded-2xl group-hover:rotate-12 transition-transform shadow-2xl shadow-primary/30">
                 <Briefcase size={28} className="text-white" />
@@ -721,7 +728,6 @@ export default function App() {
             <Link 
               to="/join"
               className="bg-primary text-white px-7 sm:px-10 py-4 sm:py-5 rounded-2xl font-black text-[10px] sm:text-xs uppercase tracking-widest hover:bg-secondary hover:shadow-4xl transition-all duration-500 shadow-2xl shadow-primary/20"
-              onClick={() => setSelectedProfileId(null)}
             >
               Join Us
             </Link>
@@ -754,7 +760,7 @@ export default function App() {
       <main className="min-h-screen pt-44 xl:pt-36">
         <Routes>
           <Route path="/" element={<HomePage onNavigate={navigate} />} />
-          <Route path="/members" element={<MembersPersonalPage searchTerm={searchTerm} setSearchTerm={setSearchTerm} filteredMembers={filteredMembers} onSelectProfile={handleSelectProfile} />} />
+          <Route path="/members" element={<MembersPersonalPage searchTerm={searchTerm} setSearchTerm={setSearchTerm} filteredMembers={filteredMembers} onSelectProfile={(id) => handleSelectProfile(id, 'personal')} />} />
           <Route path="/business" element={
             <BusinessCatalogPage 
                 searchTerm={searchTerm} 
@@ -762,10 +768,11 @@ export default function App() {
                 selectedCategory={selectedCategory}
                 setSelectedCategory={setSelectedCategory}
                 filteredMembers={filteredMembers}
-                onSelectProfile={handleSelectProfile}
+                    onSelectProfile={(id) => handleSelectProfile(id, 'business')}
             />
           } />
-          <Route path="/detail" element={<ProfileDetailPage profileId={selectedProfileId} members={appData.members} onBack={() => navigate('/business')} />} />
+                  <Route path="/profile/personal/:id" element={<PersonalProfilePage members={appData.members} />} />
+                  <Route path="/profile/business/:id" element={<BusinessProfilePage members={appData.members} />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/join" element={<JoinPage />} />

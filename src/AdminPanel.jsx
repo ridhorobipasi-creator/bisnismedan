@@ -97,8 +97,8 @@ const Select = ({ value, onChange, name, options }) => (
 const MemberForm = ({ item, onSave, onClose }) => {
   const [form, setForm] = useState({
     name: '', business: '', category: 'F&B', location: '', address: '',
-    description: '', duration: '', contact: '', ig: '',
-    services: ['', '', ''], age: '',
+    description: '', businessBio: '', personalBio: '', role: '', duration: '', contact: '', ig: '',
+    profilePhoto: '', businessPhoto: '', services: ['', '', ''], age: '',
     ...item
   });
 
@@ -110,7 +110,11 @@ const MemberForm = ({ item, onSave, onClose }) => {
 
   const submit = () => {
     if (!form.name.trim() || !form.business.trim()) return alert('Nama dan Bisnis wajib diisi!');
-    const cleaned = { ...form, services: form.services.filter(Boolean) };
+    const cleaned = {
+      ...form,
+      description: form.businessBio || form.description,
+      services: form.services.filter(Boolean)
+    };
     onSave(cleaned);
   };
 
@@ -129,6 +133,9 @@ const MemberForm = ({ item, onSave, onClose }) => {
         <Field label="Usia">
           <Input name="age" value={form.age} onChange={handle} placeholder="ex: 35" />
         </Field>
+        <Field label="Peran / Jabatan">
+          <Input name="role" value={form.role} onChange={handle} placeholder="ex: Founder / CEO" />
+        </Field>
         <Field label="Lokasi / Kecamatan">
           <Input name="location" value={form.location} onChange={handle} placeholder="ex: Medan Johor" />
         </Field>
@@ -144,9 +151,20 @@ const MemberForm = ({ item, onSave, onClose }) => {
         <Field label="Instagram (tanpa @)">
           <Input name="ig" value={form.ig} onChange={handle} placeholder="username.ig" />
         </Field>
+        <Field label="URL Foto Profil Pribadi">
+          <Input name="profilePhoto" value={form.profilePhoto} onChange={handle} placeholder="https://..." />
+        </Field>
+        <Field label="URL Foto Bisnis">
+          <Input name="businessPhoto" value={form.businessPhoto} onChange={handle} placeholder="https://..." />
+        </Field>
         <div className="md:col-span-2">
-          <Field label="Deskripsi Bisnis">
-            <Textarea name="description" value={form.description} onChange={handle} rows={3} placeholder="Jelaskan bisnis Anda secara singkat..." />
+          <Field label="Biodata Pribadi">
+            <Textarea name="personalBio" value={form.personalBio} onChange={handle} rows={3} placeholder="Ceritakan profil pribadi, pengalaman, dan fokus profesional..." />
+          </Field>
+        </div>
+        <div className="md:col-span-2">
+          <Field label="Profil / Bio Bisnis">
+            <Textarea name="businessBio" value={form.businessBio || form.description} onChange={handle} rows={3} placeholder="Jelaskan bisnis, layanan utama, dan nilai unggulan..." />
           </Field>
         </div>
         <div className="md:col-span-2">
@@ -312,7 +330,9 @@ const Dashboard = ({ data }) => {
           <div className="space-y-4">
             {recentMembers.map(m => (
               <div key={m.id} className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-black text-sm shrink-0">{m.name[0]}</div>
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-black text-sm shrink-0 overflow-hidden">
+                  {m.profilePhoto ? <img src={m.profilePhoto} alt={m.name} className="w-full h-full object-cover" /> : m.name[0]}
+                </div>
                 <div className="flex-1 min-w-0">
                   <div className="font-bold text-gray-800 truncate">{m.name}</div>
                   <div className="text-xs text-gray-400 truncate">{m.business}</div>
@@ -423,8 +443,8 @@ const MembersTab = ({ data, update, notify }) => {
                 <tr key={m.id} className="hover:bg-blue-50/30 transition-colors">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-black text-sm shrink-0">
-                        {m.name[0]}
+                      <div className="w-11 h-11 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-black text-sm shrink-0 overflow-hidden">
+                        {m.profilePhoto ? <img src={m.profilePhoto} alt={m.name} className="w-full h-full object-cover" /> : m.name[0]}
                       </div>
                       <div>
                         <div className="font-bold text-gray-900">{m.name}</div>

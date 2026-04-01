@@ -391,68 +391,63 @@ const BusinessCatalogPage = ({ searchTerm, setSearchTerm, selectedCategory, setS
 
 
 const AboutPage = () => (
-    <div className="animate-in fade-in duration-700">
-        <section className="relative min-h-[700px] flex items-center px-10 overflow-hidden bg-white">
-            <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent z-10"></div>
-                <img className="w-full h-full object-cover opacity-20 filter grayscale" src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=2000" alt="Medan Business Atmosphere" />
-            </div>
-            <div className="relative z-20 max-w-7xl mx-auto w-full">
-                <div className="max-w-3xl">
-                    <span className="inline-block px-5 py-2 mb-8 rounded-full bg-secondary/10 text-secondary font-black text-[10px] tracking-[0.4em] uppercase">Visi Kami</span>
-                    <h1 className="text-8xl md:text-9xl font-black text-primary leading-[0.85] tracking-tighter mb-12">
-                        Kurasi Adalah Standar Baru.
-                    </h1>
-                    <p className="text-3xl text-on-surface-variant leading-relaxed font-medium opacity-80 max-w-2xl">
-                        Membangun ekosistem profesional di mana kualitas bukan lagi pilihan, melainkan sebuah prasyarat mutlak.
-                    </p>
-                </div>
-            </div>
-        </section>
+  <div className="animate-in fade-in duration-700 max-w-7xl mx-auto px-6 sm:px-8 py-16 space-y-10">
+    <section className="relative overflow-hidden rounded-[2.5rem] section-frame bg-white/85 p-10 sm:p-14">
+      <div className="absolute inset-0 opacity-25">
+        <img className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=2000" alt="Medan Business Atmosphere" />
+      </div>
+      <div className="relative z-10 max-w-3xl">
+        <span className="inline-block px-4 py-2 mb-6 rounded-full bg-secondary/10 text-secondary font-black text-[10px] tracking-[0.35em] uppercase">Visi Kami</span>
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-primary leading-tight tracking-tight mb-6">Kurasi profesional dengan standar yang lebih tinggi.</h1>
+        <p className="text-base sm:text-lg text-on-surface-variant leading-relaxed font-medium opacity-85">Kami membangun ekosistem bisnis Medan yang lebih sehat: terhubung, terverifikasi, dan punya peluang kolaborasi nyata.</p>
+      </div>
+    </section>
 
-        <section className="py-40 bg-surface-container-low px-10">
-            <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-32 items-center">
-                <div className="space-y-16">
-                    <h2 className="text-6xl font-black text-primary tracking-tighter leading-none">Misi Melarisi <br/><span className="text-secondary">& Menginspirasi.</span></h2>
-                    <p className="text-2xl text-on-surface-variant leading-relaxed font-medium opacity-80">
-                         MEDAN BUSINESS bukan sekadar wadah berkumpul. Kami adalah akselerator bagi bisnis lokal untuk mencapai standar nasional melalui kolaborasi yang sehat.
-                    </p>
-                    <div className="grid gap-8">
-                        <div className="p-10 rounded-[3rem] bg-white shadow-2xl flex items-start gap-8 border-l-[12px] border-primary">
-                            <Verified className="text-primary mt-1" size={48} />
-                            <div>
-                                <h4 className="text-2xl font-black text-primary mb-4 tracking-tight">Kualitas Tanpa Kompromi</h4>
-                                <p className="text-on-surface-variant text-lg font-medium opacity-70">Hanya individu dan bisnis dengan rekam jejak terbukti yang divalidasi ke dalam ekosistem kami.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="relative">
-                    <div className="aspect-[3/4] rounded-[5rem] overflow-hidden shadow-3xl relative group">
-                        <img className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop" alt="Collaboration" />
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+    <section className="grid lg:grid-cols-12 gap-8 items-stretch">
+      <div className="lg:col-span-7 bg-white rounded-[2rem] border border-outline-variant/20 p-8 sm:p-10 shadow-sm">
+        <h2 className="text-3xl sm:text-4xl font-black text-primary tracking-tight mb-6">Misi yang fokus pada dampak</h2>
+        <p className="text-on-surface-variant leading-relaxed font-medium mb-8">MEDAN BUSINESS bukan sekadar wadah berkumpul. Komunitas ini dirancang sebagai akselerator untuk membuka koneksi, peluang proyek, dan pertumbuhan jangka panjang.</p>
+        <div className="grid sm:grid-cols-3 gap-4">
+          <div className="rounded-2xl bg-surface-container-low p-5 border border-outline-variant/25">
+            <Verified className="text-primary mb-3" size={26} />
+            <p className="text-sm font-black text-primary mb-1">Kurasi Ketat</p>
+            <p className="text-xs text-on-surface-variant font-medium">Validasi rekam jejak anggota.</p>
+          </div>
+          <div className="rounded-2xl bg-surface-container-low p-5 border border-outline-variant/25">
+            <Handshake className="text-primary mb-3" size={26} />
+            <p className="text-sm font-black text-primary mb-1">Kolaborasi Nyata</p>
+            <p className="text-xs text-on-surface-variant font-medium">Mendorong kerja sama lintas sektor.</p>
+          </div>
+          <div className="rounded-2xl bg-surface-container-low p-5 border border-outline-variant/25">
+            <Target className="text-primary mb-3" size={26} />
+            <p className="text-sm font-black text-primary mb-1">Pertumbuhan Terukur</p>
+            <p className="text-xs text-on-surface-variant font-medium">Arah bisnis lebih tajam dan sehat.</p>
+          </div>
+        </div>
+      </div>
+      <div className="lg:col-span-5 rounded-[2rem] overflow-hidden border border-outline-variant/20 shadow-sm min-h-[320px]">
+        <img className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop" alt="Collaboration" />
+      </div>
+    </section>
+  </div>
 );
 
 const ResourcesPage = () => (
-    <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-8 py-20">
-        <section className="relative overflow-hidden rounded-[5rem] bg-primary p-24 text-white mb-32 shadow-3xl">
-            <div className="relative z-10 max-w-3xl">
-                <span className="inline-block px-5 py-2 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-[0.4em] mb-10">Pusat Pengetahuan</span>
-                <h1 className="text-8xl font-black tracking-tighter mb-10 leading-[0.85]">Ekosistem Sumber Daya.</h1>
-                <p className="text-3xl text-white/70 leading-relaxed mb-16 font-medium">Akses eksklusif ke panduan bisnis, template legal, dan modul strategis yang dikurasi khusus untuk anggota.</p>
-                <div className="flex flex-wrap gap-6">
-                    <button className="bg-white text-primary px-12 py-6 rounded-2xl font-black text-xl hover:shadow-2xl transition-all active:scale-95 shadow-xl">Unduh Semua Aset</button>
-                    <button className="bg-transparent border-3 border-white/30 text-white px-12 py-6 rounded-2xl font-black text-xl hover:bg-white/10 transition-all">Kontribusi Konten</button>
-                </div>
-            </div>
-            <div className="absolute -right-40 -bottom-40 w-[800px] h-[800px] bg-secondary/30 rounded-full blur-[150px]"></div>
-        </section>
+  <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-6 sm:px-8 py-16 space-y-8">
+    <section className="relative overflow-hidden rounded-[2.5rem] bg-primary p-10 sm:p-12 text-white shadow-2xl">
+      <div className="relative z-10 max-w-3xl">
+        <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-[0.35em] mb-6">Pusat Pengetahuan</span>
+        <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-5 leading-tight">Sumber daya siap pakai untuk pertumbuhan bisnis.</h1>
+        <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-8 font-medium">Akses template legal, modul operasional, dan dokumen strategi yang dirancang praktis untuk kebutuhan harian anggota.</p>
+        <div className="flex flex-wrap gap-3">
+          <button className="bg-white text-primary px-7 py-3 rounded-xl font-black text-sm hover:shadow-xl transition-all">Unduh Paket Populer</button>
+          <button className="bg-transparent border border-white/30 text-white px-7 py-3 rounded-xl font-black text-sm hover:bg-white/10 transition-all">Ajukan Resource Baru</button>
+        </div>
+      </div>
+      <div className="absolute -right-32 -bottom-32 w-[420px] h-[420px] bg-secondary/30 rounded-full blur-[120px]"></div>
+    </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
                 { title: "Panduan Dasar Bisnis", format: "PDF", size: "12.4 MB", desc: "Kerangka kerja komprehensif membangun fondasi bisnis kuat.", icon: <Download />, color: "bg-red-50 text-red-600" },
                 { title: "Template Proyeksi Finansial", format: "XLSX", size: "2.1 MB", desc: "Model spreadsheet siap pakai untuk hitung runway pendapatan.", icon: <Download />, color: "bg-green-50 text-green-600" },
@@ -461,19 +456,19 @@ const ResourcesPage = () => (
                 { title: "SOP Operasional Retail", format: "DOCX", size: "3.5 MB", desc: "Standard Operating Procedure untuk bisnis ritel modern.", icon: <Briefcase />, color: "bg-orange-50 text-orange-600" },
                 { title: "Strategi Digital Marketing", format: "PDF", size: "8.9 MB", desc: "Panduan pemasaran di era digital kota besar.", icon: <Target />, color: "bg-indigo-50 text-indigo-600" }
             ].map((item, idx) => (
-                <div key={idx} className="group bg-white p-12 rounded-[4rem] border border-outline-variant/10 shadow-sm hover:shadow-3xl hover:-translate-y-4 transition-all duration-700">
-                    <div className="flex justify-between items-start mb-10">
-                        <div className={`${item.color} p-6 rounded-[2rem] shadow-inner`}>
+              <div key={idx} className="group bg-white p-7 rounded-[1.5rem] border border-outline-variant/20 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div className="flex justify-between items-start mb-5">
+                  <div className={`${item.color} p-4 rounded-xl shadow-inner`}>
                             {React.cloneElement(item.icon, { size: 40 })}
                         </div>
                         <span className="text-[10px] font-black uppercase tracking-widest opacity-30">{item.format}</span>
                     </div>
-                    <h3 className="text-3xl font-black text-primary mb-4 tracking-tighter group-hover:text-secondary transition-colors">{item.title}</h3>
-                    <p className="text-on-surface-variant font-medium text-lg leading-relaxed mb-12 opacity-70">{item.desc}</p>
-                    <div className="flex justify-between items-center pt-10 border-t border-outline-variant/20">
+                <h3 className="text-xl font-black text-primary mb-3 tracking-tight group-hover:text-secondary transition-colors">{item.title}</h3>
+                <p className="text-on-surface-variant font-medium text-sm leading-relaxed mb-7 opacity-70">{item.desc}</p>
+                <div className="flex justify-between items-center pt-5 border-t border-outline-variant/20">
                         <span className="text-xs font-black opacity-30 tracking-widest">{item.size}</span>
-                        <button className="flex items-center gap-4 text-primary font-black text-lg uppercase tracking-tighter hover:gap-6 transition-all">
-                            Unduh <ArrowRight size={24} />
+                  <button className="flex items-center gap-2 text-primary font-black text-xs uppercase tracking-wider hover:gap-3 transition-all">
+                    Unduh <ArrowRight size={16} />
                         </button>
                     </div>
                 </div>
@@ -483,32 +478,32 @@ const ResourcesPage = () => (
 );
 
 const JoinPage = () => (
-    <div className="animate-in slide-in-from-bottom-10 duration-1000 max-w-6xl mx-auto px-8 py-24">
-        <header className="text-center mb-32">
-            <span className="inline-block px-5 py-2 bg-primary/10 text-primary font-black text-[10px] tracking-[0.4em] uppercase mb-10">AKSES EKSKLUSIF</span>
-            <h1 className="text-9xl font-black text-primary tracking-tighter mb-10 leading-[0.8]">Mulai Langkah Anda.</h1>
-            <p className="text-3xl text-on-surface-variant leading-relaxed opacity-70 font-medium max-w-4xl mx-auto">Masuk ke dalam proses kurasi paling prestisius di Medan. Tingkatkan profil profesional Anda melalui ekosistem kami.</p>
-        </header>
+  <div className="animate-in slide-in-from-bottom-10 duration-700 max-w-6xl mx-auto px-6 sm:px-8 py-16">
+    <header className="text-center mb-12 max-w-4xl mx-auto">
+      <span className="inline-block px-4 py-2 bg-primary/10 text-primary font-black text-[10px] tracking-[0.35em] uppercase mb-6">AKSES EKSKLUSIF</span>
+      <h1 className="text-4xl sm:text-5xl font-black text-primary tracking-tight mb-5 leading-tight">Gabung komunitas bisnis yang lebih terkurasi.</h1>
+      <p className="text-base sm:text-lg text-on-surface-variant leading-relaxed opacity-80 font-medium">Isi data Anda singkat, lalu lanjutkan proses verifikasi lewat admin. Kami fokus pada kualitas member dan kolaborasi jangka panjang.</p>
+    </header>
 
-        <div className="bg-white rounded-[5rem] shadow-[0_80px_150px_-30px_rgba(0,0,0,0.15)] p-20 md:p-32 border border-outline-variant/30 flex flex-col items-center">
-             <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center text-white mb-16 animate-pulse">
+    <div className="bg-white rounded-[2.5rem] shadow-[0_50px_100px_-40px_rgba(0,0,0,0.2)] p-8 sm:p-12 border border-outline-variant/30 flex flex-col items-center">
+       <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center text-white mb-8 animate-pulse">
                 <Sparkles size={48} />
              </div>
-             <h2 className="text-5xl font-black text-primary mb-10 tracking-tighter text-center">Permintaan Verifikasi Keanggotaan</h2>
-             <p className="text-xl text-on-surface-variant text-center mb-20 opacity-60 max-w-2xl">Aplikasi Anda akan ditinjau secara manual oleh dewan pengurus komunitas. Pastikan data yang Anda masukkan akurat.</p>
+       <h2 className="text-3xl font-black text-primary mb-4 tracking-tight text-center">Permintaan Verifikasi Keanggotaan</h2>
+       <p className="text-sm sm:text-base text-on-surface-variant text-center mb-10 opacity-70 max-w-2xl">Aplikasi Anda akan ditinjau manual oleh tim pengurus. Pastikan biodata dan profil bisnis diisi dengan jelas.</p>
              
-             <form className="w-full max-w-3xl space-y-12">
-                 <div className="grid md:grid-cols-2 gap-10">
-                    <input className="w-full bg-surface-container-low border-none rounded-3xl p-8 focus:ring-8 focus:ring-primary/10 text-xl font-bold transition-all" placeholder="Nama Lengkap" />
-                    <input className="w-full bg-surface-container-low border-none rounded-3xl p-8 focus:ring-8 focus:ring-primary/10 text-xl font-bold transition-all" placeholder="Bidang Keahlian" />
+       <form className="w-full max-w-3xl space-y-5">
+         <div className="grid md:grid-cols-2 gap-4">
+          <input className="w-full bg-surface-container-low border border-outline-variant/25 rounded-2xl p-4 focus:ring-4 focus:ring-primary/10 text-base font-bold transition-all" placeholder="Nama Lengkap" />
+          <input className="w-full bg-surface-container-low border border-outline-variant/25 rounded-2xl p-4 focus:ring-4 focus:ring-primary/10 text-base font-bold transition-all" placeholder="Bidang Keahlian" />
                  </div>
-                 <input className="w-full bg-surface-container-low border-none rounded-3xl p-8 focus:ring-8 focus:ring-primary/10 text-xl font-bold transition-all" placeholder="Link Profil Instagram / LinkedIn" />
-                 <textarea className="w-full bg-surface-container-low border-none rounded-[3rem] p-10 focus:ring-8 focus:ring-primary/10 text-xl font-bold transition-all min-h-[250px]" placeholder="Deskripsikan nilai yang ingin Anda tawarkan kepada komunitas..." />
+         <input className="w-full bg-surface-container-low border border-outline-variant/25 rounded-2xl p-4 focus:ring-4 focus:ring-primary/10 text-base font-bold transition-all" placeholder="Link Profil Instagram / LinkedIn" />
+         <textarea className="w-full bg-surface-container-low border border-outline-variant/25 rounded-2xl p-4 focus:ring-4 focus:ring-primary/10 text-base font-bold transition-all min-h-[180px]" placeholder="Deskripsikan nilai yang ingin Anda tawarkan kepada komunitas..." />
                   <a
                     href={buildWhatsAppLink('Halo Tim Medan Business, saya ingin mengajukan aplikasi keanggotaan. Mohon panduannya.')}
                     target="_blank"
                     rel="noreferrer"
-                    className="w-full inline-flex justify-center bg-primary text-white py-8 rounded-[2rem] font-black text-2xl uppercase tracking-widest hover:bg-secondary hover:shadow-3xl hover:-translate-y-2 transition-all shadow-2xl"
+          className="w-full inline-flex justify-center bg-primary text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-secondary hover:shadow-xl transition-all shadow-lg"
                   >
                     Ajukan Aplikasi Keanggotaan
                   </a>
@@ -518,29 +513,29 @@ const JoinPage = () => (
 );
 
 const EventsPage = ({ events }) => (
-    <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-8 py-20">
-        <header className="mb-32 text-center">
-            <h1 className="text-9xl font-black text-primary tracking-tighter mb-10 leading-[0.8]">Kopdar & Agenda.</h1>
-            <p className="text-3xl text-on-surface-variant max-w-3xl mx-auto font-medium opacity-60">Sinergi nyata terjadi di dalam pertemuan fisik. Pastikan Anda hadir di setiap momen kurasi.</p>
-        </header>
+  <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-6 sm:px-8 py-16">
+    <header className="mb-10 text-center max-w-3xl mx-auto">
+      <h1 className="text-4xl sm:text-5xl font-black text-primary tracking-tight mb-4">Kopdar & Agenda</h1>
+      <p className="text-base sm:text-lg text-on-surface-variant font-medium opacity-75">Sinergi terbaik lahir dari pertemuan rutin. Pilih agenda yang relevan untuk bisnis Anda.</p>
+    </header>
 
-        <div className="grid gap-16">
+    <div className="grid gap-6">
             {events.map(event => (
-                <div key={event.id} className="bg-white rounded-[5rem] overflow-hidden shadow-2xl border border-outline-variant/10 flex flex-col lg:flex-row group hover:shadow-4xl transition-all duration-1000">
-                    <div className="w-full lg:w-80 bg-primary p-20 flex flex-col items-center justify-center text-white shrink-0 group-hover:bg-secondary transition-colors duration-700">
-                        <span className="text-xl font-black uppercase tracking-[0.5em] opacity-40 mb-4">{event.month}</span>
-                        <span className="text-9xl font-black leading-none">{event.day}</span>
+        <div key={event.id} className="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-outline-variant/20 flex flex-col lg:flex-row group hover:shadow-xl transition-all duration-300">
+          <div className="w-full lg:w-44 bg-primary p-7 flex lg:flex-col items-center justify-center text-white shrink-0 group-hover:bg-secondary transition-colors duration-300 gap-3">
+            <span className="text-xs font-black uppercase tracking-[0.35em] opacity-70">{event.month}</span>
+            <span className="text-5xl font-black leading-none">{event.day}</span>
                     </div>
-                    <div className="p-20 flex-grow flex flex-col justify-center">
-                        <span className="inline-block px-6 py-2.5 rounded-full bg-primary/10 text-primary text-xs font-black uppercase tracking-widest mb-8">{event.type}</span>
-                        <h3 className="text-6xl font-black text-primary mb-8 tracking-tighter leading-none group-hover:text-secondary transition-colors">{event.title}</h3>
-                        <p className="text-2xl text-on-surface-variant font-medium leading-relaxed opacity-60 mb-12 max-w-3xl">{event.desc}</p>
-                        <div className="flex flex-wrap gap-12 pt-12 border-t border-outline-variant/20">
-                            <div className="flex items-center gap-4 text-xl font-bold text-on-surface/80">
-                                <MapPin size={32} className="text-primary" /> {event.location}
+          <div className="p-7 sm:p-8 flex-grow flex flex-col justify-center">
+            <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest mb-4">{event.type}</span>
+            <h3 className="text-2xl sm:text-3xl font-black text-primary mb-3 tracking-tight leading-tight group-hover:text-secondary transition-colors">{event.title}</h3>
+            <p className="text-sm sm:text-base text-on-surface-variant font-medium leading-relaxed opacity-70 mb-6 max-w-3xl">{event.desc}</p>
+            <div className="flex flex-wrap gap-6 pt-6 border-t border-outline-variant/20">
+              <div className="flex items-center gap-2 text-sm font-bold text-on-surface/80">
+                <MapPin size={18} className="text-primary" /> {event.location}
                             </div>
-                            <div className="flex items-center gap-4 text-xl font-bold text-on-surface/80">
-                                <Clock size={32} className="text-primary" /> 19.30 WIB - Selesai
+              <div className="flex items-center gap-2 text-sm font-bold text-on-surface/80">
+                <Clock size={18} className="text-primary" /> 19.30 WIB - Selesai
                             </div>
                         </div>
                     </div>
@@ -551,41 +546,41 @@ const EventsPage = ({ events }) => (
 );
 
 const OpportunitiesPage = ({ opportunities }) => (
-    <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-8 py-20">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-32 gap-12">
-            <div className="text-center md:text-left">
-                <h1 className="text-8xl font-black text-primary tracking-tighter mb-6 leading-none">Peluang & <br/><span className="text-secondary">Sinergi Bisnis.</span></h1>
-                <p className="text-2xl text-on-surface-variant max-w-2xl font-medium opacity-60">Ruang kolaborasi strategis bagi anggota untuk berbagi kebutuhan suplai dan proyek besar.</p>
+  <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-6 sm:px-8 py-16">
+    <div className="flex flex-col md:flex-row justify-between md:items-end mb-10 gap-5">
+      <div className="text-center md:text-left max-w-2xl">
+        <h1 className="text-4xl sm:text-5xl font-black text-primary tracking-tight mb-4 leading-tight">Peluang & Sinergi Bisnis</h1>
+        <p className="text-base sm:text-lg text-on-surface-variant font-medium opacity-75">Ruang kolaborasi strategis bagi anggota untuk berbagi kebutuhan suplai, proyek, dan kemitraan.</p>
             </div>
             <a
               href={buildWhatsAppLink('Halo Tim Medan Business, saya ingin posting peluang kolaborasi bisnis di komunitas.')}
               target="_blank"
               rel="noreferrer"
-              className="bg-primary text-white p-12 rounded-[2.5rem] font-black uppercase tracking-widest text-lg hover:shadow-4xl transition-all shadow-2xl flex items-center gap-6"
+        className="bg-primary text-white px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:shadow-xl transition-all shadow-lg flex items-center gap-3"
             >
-                <Megaphone size={32} /> Posting Peluang
+        <Megaphone size={18} /> Posting Peluang
             </a>
         </div>
 
-        <div className="grid gap-12">
+    <div className="grid gap-5">
             {opportunities.map(opp => (
-                <div key={opp.id} className="bg-white p-16 rounded-[4rem] border border-outline-variant/10 shadow-2xl hover:shadow-4xl transition-all duration-1000 flex flex-col md:flex-row gap-16 items-center hover:-translate-x-4">
-                    <div className="w-32 h-32 bg-primary-container/10 rounded-[3rem] flex items-center justify-center text-primary shrink-0 shadow-inner group">
+        <div key={opp.id} className="bg-white p-6 sm:p-7 rounded-[2rem] border border-outline-variant/20 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row gap-6 items-start md:items-center">
+          <div className="w-20 h-20 bg-primary-container/10 rounded-2xl flex items-center justify-center text-primary shrink-0 shadow-inner group">
                         {opp.icon === 'car' ? <Car size={64} /> : 
                          opp.icon === 'video' ? <Video size={64} /> : 
                          opp.icon === 'star' ? <Star size={64} /> : 
                          <ShoppingBag size={64} />}
                     </div>
                     <div className="flex-grow">
-                        <div className="flex flex-wrap items-center gap-6 mb-6">
-                            <span className="bg-secondary/10 text-secondary px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-widest">{opp.type}</span>
+            <div className="flex flex-wrap items-center gap-3 mb-3">
+              <span className="bg-secondary/10 text-secondary px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">{opp.type}</span>
                             <span className="text-xs font-bold text-outline uppercase tracking-widest opacity-50 ml-auto">PIC: {opp.postedBy}</span>
                         </div>
-                        <h3 className="text-5xl font-black text-primary mb-6 tracking-tighter leading-tight">{opp.title}</h3>
-                        <p className="text-2xl text-on-surface-variant font-medium leading-relaxed opacity-60 mb-0">{opp.desc}</p>
+            <h3 className="text-2xl sm:text-3xl font-black text-primary mb-3 tracking-tight leading-tight">{opp.title}</h3>
+            <p className="text-sm sm:text-base text-on-surface-variant font-medium leading-relaxed opacity-70 mb-0">{opp.desc}</p>
                     </div>
                     <div className="shrink-0">
-                        <button className="px-12 py-6 bg-primary text-white rounded-3xl font-black uppercase tracking-widest text-sm hover:bg-secondary transition-all shadow-2xl">
+            <button className="px-6 py-3 bg-primary text-white rounded-xl font-black uppercase tracking-widest text-xs hover:bg-secondary transition-all shadow-lg">
                             Ambil Peluang
                         </button>
                     </div>

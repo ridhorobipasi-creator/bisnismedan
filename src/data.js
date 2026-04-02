@@ -13,7 +13,9 @@ export const membersData = [
     description: "Penyedia solusi pendingin udara outdoor terbaik di Medan. Menggunakan unit Krisbow original untuk menjamin kesejukan acara Anda.",
     services: ["Sewa Kipas Blower", "Pengadaan Unit Krisbow", "Maintenance Pendingin"],
     contact: "6281263608999",
-    address: "Jl. Menteng Raya No. 45, Medan Denai"
+    address: "Jl. Menteng Raya No. 45, Medan Denai",
+    aboutMe: "Pebisnis berpengalaman dengan portofolio luas di bidang jasa peratalan industri. Berfokus pada pembangunan ekosistem bisnis Medan yang transparan dan kompetitif.",
+    expertise: "Business Strategy, Logistics, Industrial Support"
   },
   { 
     id: 2, 
@@ -27,7 +29,9 @@ export const membersData = [
     description: "Jasa sewa dan laundry perlengkapan bayi seperti stroller, carseat, box bayi, dan mainan anak. Juga melayani jasa Brand/Social Media Consultant.",
     services: ["Sewa Perlengkapan Bayi", "Laundry Stroller", "Social Media Consultant"],
     contact: "6281394445144",
-    address: "Jl. Jawa, Sikambing, Medan"
+    address: "Jl. Jawa, Sikambing, Medan",
+    aboutMe: "Seorang konsultan branding yang bertransisi ke bisnis rental dan laundry. Menyadari pentingnya kebersihan dan keamanan dalam perlengkapan bayi bagi para orang tua.",
+    expertise: "Branding, Social Media Optimization, Operations Management"
   },
   { 
     id: 3, 
@@ -41,7 +45,9 @@ export const membersData = [
     description: "Produsen kue kering homemade premium di Medan. Menyediakan berbagai varian cookies untuk hantaran, sekolah, dan reseller.",
     services: ["Aneka Kue Kering", "Hampers Hari Raya", "Reseller Program"],
     contact: "6282258352235",
-    address: "Menteng Raya, Medan Denai"
+    address: "Menteng Raya, Medan Denai",
+    aboutMe: "Pembuat kue yang mengutamakan bahan-bahan alami dan kualitas rasa. Memulai bisnis dari dapur rumah dan sekarang melayani ratusan pelanggan setiap minggunya.",
+    expertise: "Culinary Arts, Product Packaging, Reseller Management"
   },
   { 
     id: 4, 
@@ -55,7 +61,9 @@ export const membersData = [
     description: "Visual Design, Digital Printing, dan Marketing. Menyediakan juga jasa Outbound untuk corporate dan komunitas.",
     services: ["Digital Printing", "Visual Design", "Jasa Outbound"],
     contact: "6281262837646",
-    address: "Johor, Medan"
+    address: "Johor, Medan",
+    aboutMe: "Individu kreatif yang menggabungkan kemampuan desain dengan manajemen logistik outbound. Membantu perusahaan membangun kekompakan tim melalui aktivitas fisik.",
+    expertise: "Graphic Design, Team Building, Event Management"
   },
   { 
     id: 5, 
@@ -69,7 +77,9 @@ export const membersData = [
     description: "Pusat grosir sembako kebutuhan harian dengan harga bersaing untuk mitra toko dan rumah tangga.",
     services: ["Suplai Sembako", "Kemitraan Toko", "Retail Sembako"],
     contact: "6281260010811",
-    address: "Komp. Pemda Tk.I Simp. Selayang"
+    address: "Komp. Pemda Tk.I Simp. Selayang",
+    aboutMe: "Pebisnis ritel yang fokus pada pemberdayaan warung-warung kecil melalui penyediaan stok yang andal dan terjangkau.",
+    expertise: "Supply Chain, Inventory Management, Local Trade"
   },
   { 
     id: 6, 

@@ -1,148 +1,34 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Routes, Route, Link, useNavigate, useLocation, useParams } from 'react-router-dom';
-import { 
-  Search, Users, Home, Briefcase, MapPin, 
-  Instagram, Facebook, Clock, Filter, ChevronRight, 
-  Phone, Globe, Coffee, MonitorPlay, ShoppingBag, 
+import {
+  Search, Users, Briefcase, MapPin,
+  Instagram, Facebook, Clock, Filter,
+  Coffee, MonitorPlay, ShoppingBag,
   Building, GraduationCap, Car, Wheat, HelpCircle,
-  Calendar, Info, Megaphone, Target, Star, Handshake, CheckCircle2,
-  Download, ArrowRight, Verified, Share2, Mail, Video, ChevronLeft,
-  Gavel, Eye as Visibility, Users as Diversity3, ShieldCheck as FactCheck, UserPlus as PersonAdd,
-  Heart, Sparkles, UserCircle, Store, ExternalLink, MessageCircle,
-  Lock, ShieldCheck, AlertCircle, RefreshCw
+  Megaphone, Target, Star, Handshake, CheckCircle2,
+  Download, ArrowRight, Verified, Share2, Video, ChevronLeft,
+  Gavel, Sparkles, UserCircle, Store, MessageCircle,
+  Lock, Sun, Moon
 } from 'lucide-react';
 import { membersData, statsData, eventsData, opportunitiesData } from './data';
 import AdminPanel from './AdminPanel';
 
 const categories = [
   { name: "Semua", icon: <Filter size={16} /> },
-  { name: "F&B", icon: <Coffee size={16} /> },
-  { name: "Retail & Grosir", icon: <ShoppingBag size={16} /> },
-  { name: "Jasa & Sewa", icon: <HelpCircle size={16} /> },
-  { name: "Agensi & IT", icon: <MonitorPlay size={16} /> },
-  { name: "Properti & Konstruksi", icon: <Building size={16} /> },
-  { name: "Pendidikan", icon: <GraduationCap size={16} /> },
-  { name: "Otomotif", icon: <Car size={16} /> },
-  { name: "Pertanian & Peternakan", icon: <Wheat size={16} /> }
+  { name: "F&B", icon: "restaurant" },
+  { name: "Retail & Grosir", icon: "shopping_bag" },
+  { name: "Jasa & Sewa", icon: "handyman" },
+  { name: "Agensi & IT", icon: "computer" },
+  { name: "Properti & Konstruksi", icon: "apartment" },
+  { name: "Pendidikan", icon: "school" },
+  { name: "Otomotif", icon: "directions_car" },
+  { name: "Pertanian & Peternakan", icon: "agriculture" }
 ];
 
 const COMMUNITY_WHATSAPP = '62812000000';
 const buildWhatsAppLink = (text) => `https://wa.me/${COMMUNITY_WHATSAPP}?text=${encodeURIComponent(text)}`;
 
-// --- Profile Pages ---
-const ProfileImage = ({ src, fallback, className }) => (
-  src ? <img src={src} alt={fallback} className={className} /> : <div className="text-primary font-black text-5xl sm:text-6xl select-none opacity-30">{fallback}</div>
-);
 
-const PersonalProfilePage = ({ members }) => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const profile = useMemo(() => members.find(m => String(m.id) === id), [id, members]);
-
-  if (!profile) return <div className="p-8 sm:p-16 text-center">Profil pribadi tidak ditemukan.</div>;
-
-  return (
-    <div className="animate-in fade-in duration-500 max-w-6xl mx-auto px-6 sm:px-8 py-16">
-      <button onClick={() => navigate('/members')} className="flex items-center gap-2 text-primary font-black uppercase tracking-widest text-xs mb-10 hover:gap-4 transition-all">
-        <ChevronLeft size={20} /> Kembali ke Direktori Anggota
-      </button>
-      <div className="grid lg:grid-cols-12 gap-6 sm:gap-10">
-        <div className="lg:col-span-4">
-          <div className="bg-white rounded-[2rem] p-6 sm:p-8 border border-outline-variant/20 shadow-lg text-center">
-            <div className="w-32 h-32 sm:w-48 sm:h-48 mx-auto rounded-full border-4 border-surface-container-high overflow-hidden bg-surface-container-low flex items-center justify-center mb-6">
-              <ProfileImage src={profile.profilePhoto} fallback={profile.name[0]} className="w-full h-full object-cover" />
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-primary tracking-tight">{profile.name}</h1>
-            <p className="text-on-surface-variant font-bold mt-2">{profile.role || 'Professional Member'}</p>
-            <div className="mt-6 flex justify-center gap-3">
-              <a href={`https://wa.me/${profile.contact}`} target="_blank" rel="noreferrer" className="px-4 py-2 rounded-xl bg-green-100 text-green-700 font-black text-xs uppercase tracking-widest">WhatsApp</a>
-              <a href={`https://instagram.com/${profile.ig}`} target="_blank" rel="noreferrer" className="px-4 py-2 rounded-xl bg-pink-100 text-pink-700 font-black text-xs uppercase tracking-widest">Instagram</a>
-            </div>
-          </div>
-        </div>
-        <div className="lg:col-span-8 space-y-6">
-          <div className="bg-white rounded-[2rem] p-6 sm:p-8 border border-outline-variant/20 shadow-sm">
-            <h3 className="text-xs font-black text-primary uppercase tracking-[0.3em] mb-4">Biodata Pribadi</h3>
-            <p className="text-on-surface-variant leading-relaxed font-medium">{profile.personalBio || 'Profil pribadi akan ditampilkan setelah biodata diisi oleh admin.'}</p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-[2rem] p-6 sm:p-7 border border-outline-variant/20 shadow-sm">
-              <h4 className="text-xs font-black text-outline uppercase tracking-widest mb-4">Informasi</h4>
-              <div className="space-y-3 text-sm font-semibold text-on-surface-variant">
-                <p>Usia: {profile.age || '-'}</p>
-                <p>Lokasi: {profile.location || '-'}</p>
-                <p>Alamat: {profile.address || '-'}</p>
-              </div>
-            </div>
-            <div className="bg-white rounded-[2rem] p-6 sm:p-7 border border-outline-variant/20 shadow-sm">
-              <h4 className="text-xs font-black text-outline uppercase tracking-widest mb-4">Unit Bisnis</h4>
-              <p className="font-black text-primary text-lg">{profile.business}</p>
-              <p className="text-sm text-on-surface-variant mt-2">Kategori: {profile.category}</p>
-              <button onClick={() => navigate(`/profile/business/${profile.id}`)} className="mt-5 px-5 py-3 bg-primary text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-secondary transition-all">
-                Lihat Profil Bisnis
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const BusinessProfilePage = ({ members }) => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const profile = useMemo(() => members.find(m => String(m.id) === id), [id, members]);
-
-  if (!profile) return <div className="p-8 sm:p-16 text-center">Profil bisnis tidak ditemukan.</div>;
-
-  return (
-    <div className="animate-in fade-in duration-500 max-w-6xl mx-auto px-6 sm:px-8 py-16">
-      <button onClick={() => navigate('/business')} className="flex items-center gap-2 text-primary font-black uppercase tracking-widest text-xs mb-10 hover:gap-4 transition-all">
-        <ChevronLeft size={20} /> Kembali ke Katalog Bisnis
-      </button>
-      <div className="grid lg:grid-cols-12 gap-6 sm:gap-10">
-        <div className="lg:col-span-5">
-          <div className="aspect-[4/3] rounded-[2rem] overflow-hidden bg-surface-container-low border border-outline-variant/20 shadow-lg flex items-center justify-center">
-            <ProfileImage src={profile.businessPhoto || profile.profilePhoto} fallback={profile.business?.[0] || profile.name[0]} className="w-full h-full object-cover" />
-          </div>
-        </div>
-        <div className="lg:col-span-7 space-y-6">
-          <div className="bg-white rounded-[2rem] p-6 sm:p-8 border border-outline-variant/20 shadow-sm">
-            <div className="flex flex-wrap gap-3 mb-4">
-              <span className="px-3 py-1 bg-primary/10 text-primary rounded-lg text-[10px] font-black uppercase tracking-widest">{profile.category}</span>
-              <span className="px-3 py-1 bg-surface-container-high text-on-surface-variant rounded-lg text-[10px] font-black uppercase tracking-widest">Verified Member</span>
-            </div>
-            <h1 className="text-3xl sm:text-4xl font-black text-primary tracking-tight mb-4">{profile.business}</h1>
-            <p className="text-on-surface-variant font-medium leading-relaxed">{profile.businessBio || profile.description || 'Profil bisnis akan ditampilkan setelah data lengkap diisi admin.'}</p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-[2rem] p-6 sm:p-7 border border-outline-variant/20 shadow-sm">
-              <h4 className="text-xs font-black text-outline uppercase tracking-widest mb-4">Layanan Utama</h4>
-              <ul className="space-y-2">
-                {(profile.services || ['Konsultasi Bisnis', 'Layanan Profesional']).map((svc, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm font-semibold text-primary"><CheckCircle2 size={16} /> {svc}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-primary rounded-[2rem] p-6 sm:p-7 text-white shadow-sm">
-              <h4 className="text-xs font-black uppercase tracking-widest mb-4 text-white/70">Kontak & Operasional</h4>
-              <div className="space-y-3 text-sm font-semibold">
-                <p className="flex items-center gap-2"><MapPin size={16} /> {profile.address || profile.location || '-'}</p>
-                <p className="flex items-center gap-2"><Clock size={16} /> {profile.duration || '-'} Beroperasi</p>
-                <p className="flex items-center gap-2"><UserCircle size={16} /> PIC: {profile.name}</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <a href={buildWhatsAppLink(`Halo Tim Medan Business, saya tertarik kolaborasi dengan ${profile.business}. Mohon info detailnya.`)} target="_blank" rel="noreferrer" className="px-6 py-3 rounded-xl bg-primary text-white font-black text-xs uppercase tracking-widest hover:bg-secondary transition-all">Hubungi untuk Kolaborasi</a>
-            <button onClick={() => navigate(`/profile/personal/${profile.id}`)} className="px-6 py-3 rounded-xl border border-primary/20 text-primary font-black text-xs uppercase tracking-widest hover:bg-primary/5 transition-all">Lihat Profil Pribadi</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const Quote = ({ className, size }) => (
     <div className={className}>
@@ -154,78 +40,144 @@ const Quote = ({ className, size }) => (
 
 // --- Existing Sub-components (Pages) ---
 
-const HomePage = ({ onNavigate }) => (
+const HomePage = ({ onNavigate, opportunities }) => (
   <div className="animate-in fade-in duration-700">
-    <section className="relative px-6 sm:px-8 py-16 lg:py-24 overflow-hidden">
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-        <div className="z-10">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary-container/10 text-primary text-[10px] font-black uppercase tracking-[0.2em] mb-5">KEANGGOTAAN EKSKLUSIF</span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-primary leading-[1.02] tracking-tight mb-6">
-            Kurasi koneksi profesional, lebih terarah dan berdampak.
+    {/* HERO */}
+    <section className="relative px-6 sm:px-8 py-24 lg:py-36 overflow-hidden">
+      <div className="orb w-[500px] h-[500px] animate-float" style={{background:'rgba(77,142,255,0.1)',top:'-200px',left:'-150px',animationDelay:'0s'}}></div>
+      <div className="orb w-[400px] h-[400px] animate-float" style={{background:'rgba(78,222,163,0.07)',top:'-100px',right:'-100px',animationDelay:'2.5s'}}></div>
+
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 lg:gap-20 items-center relative z-10">
+        <div>
+          <h1 className="font-headline text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.08] mb-8" style={{color:'var(--clr-on-surface)'}}>
+            Perkumpulan pebisnis Medan yang saling <span className="gradient-text">berbagi peluang.</span>
           </h1>
-          <p className="text-on-surface-variant text-base lg:text-lg max-w-xl mb-10 leading-relaxed opacity-80">
-            Selamat datang di sanctuary bagi para profesional berimpact tinggi dan pemilik bisnis di Medan. Sebuah ekosistem kurasi yang dirancang sebagai pameran profesional eksklusif.
+          <p className="text-lg sm:text-xl max-w-xl mb-12 leading-relaxed" style={{color:'var(--clr-on-surface-variant)'}}>
+            Ekosistem bisnis terkurasi untuk profesional berimpact tinggi. Platform kolaborasi eksklusif di Kota Medan dan Sumatera Utara.
           </p>
           <div className="flex flex-wrap gap-4">
-            <button 
-              onClick={() => onNavigate('/business')}
-              className="bg-primary text-white px-8 py-4 rounded-2xl font-black text-base hover:shadow-2xl transition-all transform hover:-translate-y-1 active:scale-95 shadow-primary/20 shadow-lg flex items-center gap-3"
+            <button onClick={() => onNavigate('/business')}
+              className="btn-primary px-8 py-4 rounded-3xl font-bold text-base flex items-center gap-3"
             >
-              Katalog Bisnis <Store size={24} />
+              Explore Network <ArrowRight size={20} />
             </button>
-            <button 
-              onClick={() => onNavigate('/members')}
-              className="bg-white text-primary border-2 border-primary/10 px-8 py-4 rounded-2xl font-black text-base hover:bg-primary-container/5 transition-all shadow-sm flex items-center gap-3"
+            <button onClick={() => onNavigate('/about')}
+              className="btn-outline px-8 py-4 rounded-3xl font-bold text-base flex items-center gap-3"
             >
-              Kenali Anggota <Users size={24} />
+              Visi Kami
             </button>
           </div>
         </div>
-        <div className="relative group">
-          <div className="aspect-[4/3] rounded-[2.5rem] overflow-hidden transition-all duration-700 shadow-[0_40px_80px_-30px_rgba(0,50,125,0.25)] border-[10px] border-white">
-            <img className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop" alt="The Workspace" />
+        <div className="relative">
+          <div className="rounded-3xl overflow-hidden shadow-2xl border" style={{aspectRatio:'4/5',borderColor:'var(--clr-border-strong)'}}>
+            <img
+              className="w-full h-full object-cover"
+              src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80"
+              alt="Modern Office Medan"
+            />
+            <div className="absolute inset-0" style={{background:'linear-gradient(to top, var(--clr-bg) 0%, transparent 40%)',opacity:0.6}}></div>
           </div>
-          <div className="relative sm:absolute mt-4 sm:mt-0 sm:-bottom-8 left-0 sm:left-6 right-0 sm:right-6 bg-white/95 backdrop-blur-md p-4 sm:p-6 rounded-2xl shadow-xl border border-outline-variant/25">
-            <p className="text-primary font-bold leading-relaxed text-sm sm:text-base">"Kami tidak sekadar membangun jaringan, kami mengkurasi kualitas kolaborasi."</p>
-          </div>
+          <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full" style={{background:'rgba(77,142,255,0.1)',filter:'blur(80px)'}}></div>
+          <div className="absolute -bottom-10 -left-10 w-48 h-48 rounded-full" style={{background:'rgba(78,222,163,0.08)',filter:'blur(80px)'}}></div>
         </div>
       </div>
     </section>
 
     {/* Stats */}
-    <section className="py-20 px-6 sm:px-8">
+    <section className="py-20 px-6 sm:px-8 stats-section">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white p-10 rounded-[2rem] hover:bg-primary group transition-all duration-500 shadow-sm hover:shadow-3xl hover:-translate-y-2 border border-outline-variant/10">
-            <div className="bg-primary-container/10 p-4 rounded-xl w-fit mb-6 group-hover:bg-white/20 transition-colors">
-              <Verified className="text-primary group-hover:text-white" size={48} />
-            </div>
-            <h3 className="text-5xl font-black text-primary group-hover:text-white mb-2 tracking-tight">100+</h3>
-            <p className="text-on-surface-variant group-hover:text-white/80 font-bold uppercase tracking-widest text-[10px] mb-6">Profil Terkurasi</p>
-            <p className="text-sm text-slate-400 group-hover:text-white/60 leading-relaxed font-medium">Hanya individu dengan integritas tinggi yang bergabung dalam eksibisi kami.</p>
+          <div className="stat-card p-10 rounded-3xl cursor-default">
+            <div className="text-5xl font-headline font-bold mb-2" style={{color:'var(--clr-primary-container)'}}>100+</div>
+            <div className="font-label tracking-widest uppercase text-xs mb-4" style={{color:'var(--clr-on-surface-variant)'}}>Curated Profiles</div>
+            <p className="text-sm leading-relaxed" style={{color:'var(--clr-on-surface-variant)',opacity:0.7}}>Proses seleksi ketat memastikan hanya profesional paling berdedikasi yang bergabung.</p>
           </div>
-          <div className="bg-white p-10 rounded-[2rem] hover:bg-primary-container group transition-all duration-500 shadow-sm hover:shadow-3xl hover:-translate-y-2 border border-outline-variant/10">
-            <div className="bg-primary-container/10 p-4 rounded-xl w-fit mb-6 group-hover:bg-white/20 transition-colors">
-              <Handshake className="text-primary group-hover:text-white" size={48} />
-            </div>
-            <h3 className="text-5xl font-black text-primary group-hover:text-white mb-2 tracking-tight">1,2K</h3>
-            <p className="text-on-surface-variant group-hover:text-white/80 font-bold uppercase tracking-widest text-[10px] mb-6">Koneksi Strategis</p>
-            <p className="text-sm text-slate-400 group-hover:text-white/60 leading-relaxed font-medium">Menghubungkan ekosistem dari berbagai sektor fundamental pertumbuhan ekonomi.</p>
+          <div className="stat-card p-10 rounded-3xl cursor-default">
+            <div className="text-5xl font-headline font-bold mb-2" style={{color:'var(--clr-tertiary)'}}>1.2K</div>
+            <div className="font-label tracking-widest uppercase text-xs mb-4" style={{color:'var(--clr-on-surface-variant)'}}>Strategic Connections</div>
+            <p className="text-sm leading-relaxed" style={{color:'var(--clr-on-surface-variant)',opacity:0.7}}>Jembatan aktif antar sektor mendorong inovasi dan pertumbuhan ekonomi regional.</p>
           </div>
-          <div className="bg-secondary p-10 rounded-[2rem] relative overflow-hidden shadow-2xl flex flex-col justify-center">
-            <div className="relative z-10">
-              <h3 className="text-2xl font-black text-white mb-6 leading-tight">Siap Untuk Dikurasi?</h3>
-              <p className="text-white/75 mb-10 leading-relaxed font-medium text-sm">Ajukan aplikasi Anda untuk menjadi bagian dari direktori paling eksklusif di kota.</p>
-              <button 
-                onClick={() => onNavigate('join')}
-                className="bg-white text-secondary px-8 py-4 rounded-2xl font-black flex items-center gap-3 hover:gap-5 transition-all shadow-xl shadow-black/20"
-              >
-                Mulai Pendaftaran <ArrowRight size={24} />
-              </button>
+          <div className="stat-card p-10 rounded-3xl cursor-default">
+            <div className="text-5xl font-headline font-bold mb-2" style={{color:'var(--clr-on-surface)'}}>94%</div>
+            <div className="font-label tracking-widest uppercase text-xs mb-4" style={{color:'var(--clr-on-surface-variant)'}}>Retention Rate</div>
+            <p className="text-sm leading-relaxed" style={{color:'var(--clr-on-surface-variant)',opacity:0.7}}>Anggota terus menemukan nilai melalui wawasan bersama dan intelijen regional eksklusif.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Featured Opportunities */}
+    <section className="px-6 sm:px-8 py-28">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-14 gap-6">
+          <div className="max-w-2xl">
+            <span className="font-label tracking-[0.3em] uppercase text-xs mb-4 block" style={{color:'var(--clr-tertiary)'}}>Marketplace</span>
+            <h2 className="font-headline text-4xl sm:text-5xl font-bold tracking-tight" style={{color:'var(--clr-on-surface)'}}>Featured Business Opportunities</h2>
+          </div>
+          <button onClick={() => onNavigate('/opportunities')}
+            className="text-sm font-medium flex items-center gap-2 hover:underline transition-all" style={{color:'var(--clr-primary-container)'}}>
+            Lihat Semua Peluang <ArrowRight size={16} />
+          </button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[{
+            img:'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80',
+            cat:'F&B Hospitality', title:'Premium Boutique Café',
+            desc:'Peluang ekspansi konsep F&B yang sudah terbukti di kawasan residensial Medan Utara.',
+            sub:'Investasi: Kolektif'
+          },{
+            img:'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=600&q=80',
+            cat:'Infrastructure', title:'Logistic Center Development',
+            desc:'Kemitraan gudang berkelanjutan 15.000 m² dekat Pelabuhan Belawan.',
+            sub:'Joint Venture'
+          },{
+            img:'https://images.unsplash.com/photo-1556745753-b2904692b3cd?auto=format&fit=crop&w=600&q=80',
+            cat:'Digital Solution', title:'Agri-Tech Supply Chain SaaS',
+            desc:'Mencari mitra Series A untuk platform supply chain lokal yang melayani petani Sumut.',
+            sub:'Equity Funding'
+          }].map((opp,i) => (
+            <div key={i} className="surface-card group rounded-3xl overflow-hidden shadow-xl cursor-pointer" onClick={() => onNavigate('/opportunities')}>
+              <div className="h-48 overflow-hidden relative">
+                <img src={opp.img} alt={opp.cat}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+              </div>
+              <div className="p-8">
+                <div className="cat-tag mb-6">{opp.cat}</div>
+                <h3 className="font-headline text-xl font-bold mb-3 group-hover:text-primary transition-colors" style={{color:'var(--clr-on-surface)'}}>{opp.title}</h3>
+                <p className="text-sm leading-relaxed mb-8" style={{color:'var(--clr-on-surface-variant)'}}>{opp.desc}</p>
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-sm" style={{color:'var(--clr-on-surface)'}}>{opp.sub}</span>
+                  <div className="p-2 rounded-full transition-all bg-primary/10 group-hover:bg-primary group-hover:text-white" style={{color:'var(--clr-primary-container)'}}>
+                    <ArrowRight size={18} />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="absolute -right-20 -bottom-20 opacity-10">
-              <Users className="text-white" size={400} />
-            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* CTA */}
+    <section className="px-6 sm:px-8 py-20">
+      <div className="max-w-5xl mx-auto rounded-[3rem] p-12 md:p-20 text-center border relative overflow-hidden cta-pattern"
+        style={{background:'linear-gradient(135deg, rgba(77,142,255,0.12) 0%, var(--clr-surface-3) 100%)', borderColor:'rgba(77,142,255,0.15)'}}>
+        <div className="absolute" style={{width:300,height:300,background:'rgba(78,222,163,0.06)',filter:'blur(100px)',borderRadius:'50%',top:-50,right:-50}}></div>
+        <div className="relative z-10">
+          <h2 className="font-headline text-4xl sm:text-5xl font-bold mb-6" style={{color:'var(--clr-on-surface)'}}>Siap Berbagi Peluang?</h2>
+          <p className="text-lg mb-10 max-w-2xl mx-auto" style={{color:'var(--clr-on-surface-variant)'}}>
+            Tingkatkan trajektori profesional Anda. Bergabunglah dengan jaringan di mana peluang tidak hanya ditemukan, tapi diciptakan.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button onClick={() => onNavigate('/join')}
+              className="btn-primary px-10 py-4 rounded-2xl font-bold text-base">
+              Daftar Keanggotaan
+            </button>
+            <button onClick={() => onNavigate('/about')}
+              className="btn-outline px-10 py-4 rounded-2xl font-bold text-base">
+              Bicara dengan Advisor
+            </button>
           </div>
         </div>
       </div>
@@ -234,405 +186,502 @@ const HomePage = ({ onNavigate }) => (
 );
 
 const MembersPersonalPage = ({ searchTerm, setSearchTerm, filteredMembers, onSelectProfile }) => (
-  <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-6 sm:px-8 py-16">
-  <header className="mb-16 text-center max-w-4xl mx-auto">
-        <span className="inline-block px-5 py-2 bg-secondary/10 text-secondary font-black text-[10px] tracking-[0.4em] uppercase mb-8">TALENTA TERBAIK</span>
-    <h1 className="text-4xl sm:text-5xl font-black text-primary tracking-tight mb-6 leading-tight">Jejaring Eksklusif Anggota</h1>
-    <p className="text-base sm:text-lg text-on-surface-variant leading-relaxed opacity-80 font-medium">Mengenal lebih dekat sosok-sosok di balik kemajuan ekonomi kota. Profil personal pengusaha dan profesional terkurasi.</p>
+  <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-6 sm:px-8 py-24 lg:py-32">
+    <header className="mb-16 text-center max-w-3xl mx-auto">
+      <span className="font-label tracking-[0.3em] uppercase text-xs mb-4 block" style={{color:'var(--clr-tertiary)'}}>Talenta Terkurasi</span>
+      <h1 className="font-headline text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6" style={{color:'var(--clr-on-surface)'}}>
+        Jejaring Eksklusif <span className="gradient-text">Anggota</span>
+      </h1>
+      <p className="text-lg leading-relaxed" style={{color:'var(--clr-on-surface-variant)'}}>Mengenal lebih dekat sosok-sosok di balik kemajuan ekonomi Medan.</p>
     </header>
 
-  <div className="max-w-3xl mx-auto mb-14">
-        <div className="relative group">
-            <Search className="absolute left-8 top-1/2 -translate-y-1/2 text-primary" size={24} />
-            <input 
-                type="text" 
-                placeholder="Cari berdasarkan nama anggota atau keahlian..."
-        className="w-full pl-18 pr-8 py-5 bg-white rounded-2xl border border-outline-variant/30 focus:ring-4 focus:ring-primary/20 text-base font-bold placeholder:text-outline shadow-lg transition-all"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-            />
-        </div>
+    <div className="max-w-2xl mx-auto mb-20">
+      <div className="relative">
+        <Search className="absolute left-6 top-1/2 -translate-y-1/2" size={20} style={{color:'var(--clr-primary-container)'}} />
+        <input
+          type="text"
+          placeholder="Cari nama anggota atau keahlian..."
+          className="input-field w-full pl-16 pr-6 py-5 rounded-3xl text-sm font-medium"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
     </div>
 
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredMembers.map(member => (
-      <div key={member.id} className="group relative bg-white p-8 rounded-[2rem] hover:shadow-[0_40px_90px_-30px_rgba(0,0,0,0.18)] transition-all duration-500 border border-outline-variant/10 hover:-translate-y-2 text-center overflow-hidden">
-                <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Verified className="text-primary" size={32} />
-                </div>
-                <div className="w-28 h-28 rounded-full mx-auto mb-7 border-4 border-surface-container-high bg-primary-container shadow-lg flex items-center justify-center overflow-hidden scale-100 group-hover:scale-105 transition-transform duration-500">
-                    {member.profilePhoto ? (
-                      <img src={member.profilePhoto} alt={member.name} className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="text-primary font-black text-4xl select-none">{member.name[0]}</div>
-                    )}
-                </div>
-        <h3 className="text-2xl font-black text-primary mb-2 tracking-tight group-hover:text-secondary transition-colors leading-none">{member.name}</h3>
-        <p className="text-on-surface-variant font-black text-[10px] uppercase tracking-[0.3em] mb-7 opacity-50">{member.age !== '-' ? `${member.age} TAHUN` : 'ANGGOTA AKTIF'}</p>
-                
-        <div className="flex flex-col gap-3 text-left p-6 bg-surface-container-low rounded-2xl mb-8">
-                    <div className="flex justify-between items-center">
-                        <span className="text-[10px] font-black text-outline uppercase tracking-widest">Pengalaman</span>
-                        <span className="text-sm font-black text-primary">{member.duration}</span>
-                    </div>
-                    <div className="w-full h-px bg-outline-variant/30"></div>
-                    <div className="flex flex-col gap-1">
-                        <span className="text-[10px] font-black text-outline uppercase tracking-widest">Kepemilikan</span>
-                        <span className="text-md font-black text-on-surface line-clamp-1">{member.business}</span>
-                    </div>
-                </div>
-
-                <div className="flex justify-center gap-4">
-                    <button 
-                        onClick={() => onSelectProfile(member.id)}
-                      className="w-full py-4 bg-primary text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-secondary transition-all shadow-xl shadow-primary/20"
-                    >
-                        Lihat Profil Pribadi
-                    </button>
-                </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {filteredMembers.map(member => (
+        <div key={member.id} className="member-card p-10 rounded-[2.5rem] group text-center cursor-pointer" onClick={() => onSelectProfile(member.id)}>
+          <div className="w-28 h-28 rounded-3xl mx-auto mb-8 overflow-hidden flex items-center justify-center p-1" style={{border:'2px solid var(--clr-border-strong)', background:'var(--clr-surface-3)'}}>
+             <div className="w-full h-full rounded-2xl overflow-hidden flex items-center justify-center bg-surface-2">
+              {member.profilePhoto
+                ? <img src={member.profilePhoto} alt={member.name} className="w-full h-full object-cover" />
+                : <span className="font-headline font-bold text-4xl select-none" style={{color:'var(--clr-primary)'}}>{member.name[0]}</span>
+              }
+             </div>
+          </div>
+          <h3 className="font-headline text-2xl font-bold mb-2 tracking-tight transition-colors group-hover:text-primary-container" style={{color:'var(--clr-on-surface)'}}>{member.name}</h3>
+          <p className="font-label text-[10px] font-bold uppercase tracking-widest mb-8" style={{color:'var(--clr-primary)'}}>
+            {member.age !== '-' ? `${member.age} Tahun` : 'Anggota Aktif'}
+          </p>
+          <div className="p-6 rounded-3xl mb-8 text-left space-y-4" style={{background:'var(--clr-surface-3)', border:'1px solid var(--clr-border)'}}>
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-widest block mb-1 opacity-50" style={{color:'var(--clr-on-surface-variant)'}}>Bisnis</span>
+              <span className="text-base font-bold line-clamp-1" style={{color:'var(--clr-on-surface)'}}>{member.business}</span>
             </div>
-        ))}
+            <div className="flex justify-between items-center pt-3 border-t border-white/5">
+              <span className="text-[10px] font-bold uppercase tracking-widest opacity-50" style={{color:'var(--clr-on-surface-variant)'}}>Experience</span>
+              <span className="text-sm font-bold" style={{color:'var(--clr-tertiary)'}}>{member.duration}</span>
+            </div>
+          </div>
+          <button
+            onClick={() => onSelectProfile(member.id)}
+            className="btn-primary w-full py-4 rounded-2xl font-bold text-xs uppercase tracking-widest"
+          >
+            Lihat Profil
+          </button>
+        </div>
+      ))}
     </div>
   </div>
 );
 
 const BusinessCatalogPage = ({ searchTerm, setSearchTerm, selectedCategory, setSelectedCategory, filteredMembers, onSelectProfile }) => (
-  <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-6 sm:px-8 py-16">
-    <div className="flex flex-col md:flex-row justify-between items-end mb-14 gap-8">
-        <div className="max-w-2xl">
-            <span className="inline-block px-5 py-2 bg-primary/10 text-primary font-black text-[10px] tracking-[0.4em] uppercase mb-8">SHOWCASE UNIT BISNIS</span>
-            <h1 className="text-4xl sm:text-5xl font-black text-primary tracking-tight mb-5 leading-tight">Katalog Terkurasi</h1>
-            <p className="text-base sm:text-lg text-on-surface-variant font-medium opacity-80 leading-relaxed">Etalase eksklusif untuk mengeksplorasi ragam produk dan jasa terbaik dari ekosistem bisnis Medan.</p>
-        </div>
-        <div className="bg-primary/5 p-3 rounded-full flex items-center gap-2 border border-primary/10">
-             <Store className="text-primary ml-4" size={24} />
-             <span className="bg-white px-5 py-2 rounded-full font-black text-primary shadow-sm text-xs uppercase tracking-widest">{filteredMembers.length} Unit Bisnis Aktif</span>
-        </div>
+  <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-6 sm:px-8 py-24 lg:py-32">
+    <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+      <div className="max-w-2xl">
+        <span className="font-label tracking-[0.3em] uppercase text-xs mb-4 block" style={{color:'var(--clr-primary-container)'}}>Unit Bisnis Terverifikasi</span>
+        <h1 className="font-headline text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6" style={{color:'var(--clr-on-surface)'}}>
+          Katalog <span className="gradient-text">Terkurasi</span>
+        </h1>
+        <p className="text-lg leading-relaxed" style={{color:'var(--clr-on-surface-variant)'}}>Etalase eksklusif ragam produk dan jasa terbaik dari ekosistem bisnis Medan.</p>
+      </div>
+      <div className="glass-card px-6 py-4 rounded-2xl flex items-center gap-3 shrink-0">
+        <Store size={22} style={{color:'var(--clr-primary-container)'}} />
+        <span className="font-bold text-lg" style={{color:'var(--clr-on-surface)'}}>{filteredMembers.length} <span className="text-sm opacity-50 block font-normal">Unit Aktif</span></span>
+      </div>
     </div>
 
-    {/* Modern Filters */}
-    <div className="sticky top-[10.75rem] md:top-32 z-40 bg-background/85 backdrop-blur-2xl py-5 rounded-[2rem] shadow-xl shadow-primary/5 border border-outline-variant/10 px-4 sm:px-6 mb-12">
-        <div className="flex flex-col lg:flex-row gap-8 items-center">
-            <div className="relative flex-grow w-full">
-                <Search className="absolute left-8 top-1/2 -translate-y-1/2 text-primary" size={24} />
-                <input 
-                    type="text" 
-                    placeholder="Apa yang sedang Anda cari? Pengadaan, F&B, Jasa..."
-            className="w-full pl-18 pr-8 py-4 bg-white rounded-2xl border border-outline-variant/30 focus:ring-4 focus:ring-primary/20 text-base font-bold"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-            </div>
-            <div className="flex gap-3 overflow-x-auto w-full lg:w-auto pb-2 scrollbar-hide">
-                {categories.map((cat, idx) => (
-                    <button 
-                        key={idx}
-                        onClick={() => setSelectedCategory(cat.name)}
-                        className={`flex items-center gap-3 px-6 py-3.5 rounded-xl font-bold text-sm whitespace-nowrap transition-all shadow-sm ${selectedCategory === cat.name ? 'bg-primary text-white scale-105 shadow-xl shadow-primary/20' : 'bg-white text-on-surface hover:bg-primary/5 border border-outline-variant/20'}`}
-                    >
-                        {cat.icon}
-                        {cat.name}
-                    </button>
-                ))}
-            </div>
+    {/* Filters */}
+    <div className="sticky top-28 z-40 glass-nav py-4 rounded-[2rem] px-5 mb-14 border border-white/5">
+      <div className="flex flex-col lg:flex-row gap-4 items-center">
+        <div className="relative flex-grow w-full">
+          <Search className="absolute left-5 top-1/2 -translate-y-1/2" size={18} style={{color:'var(--clr-primary-container)'}} />
+          <input
+            type="text"
+            placeholder="Cari F&B, Jasa, IT..."
+            className="input-field w-full pl-14 pr-6 py-4 rounded-2xl text-sm"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
+        <div className="flex gap-2 overflow-x-auto w-full lg:w-auto pb-1 scrollbar-hide">
+          {categories.map((cat, idx) => (
+            <button
+              key={idx}
+              onClick={() => setSelectedCategory(cat.name)}
+              className="flex items-center gap-2 px-5 py-3 rounded-[1.25rem] font-bold text-[10px] uppercase tracking-widest whitespace-nowrap transition-all"
+              style={selectedCategory === cat.name
+                ? {background:'var(--clr-primary-container)', color:'var(--clr-on-primary-container)', boxShadow:'0 8px 32px rgba(77,142,255,0.3)'}
+                : {background:'var(--clr-surface-3)', color:'var(--clr-on-surface-variant)', border:'1px solid var(--clr-border)'}}
+            >
+              {typeof cat.icon === 'string' ? <span className="material-symbols-outlined text-[16px]">{cat.icon}</span> : cat.icon} {cat.name}
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
 
     {/* Business Grid */}
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredMembers.map(member => (
-        <article key={member.id} className="group bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-3xl transition-all duration-500 border border-outline-variant/10 flex flex-col hover:-translate-y-2">
-          <div className="h-52 bg-surface-container-high relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary-container opacity-35 group-hover:scale-110 transition-transform duration-1000"></div>
-            {(member.businessPhoto || member.profilePhoto) && <img src={member.businessPhoto || member.profilePhoto} alt={member.business} className="absolute inset-0 w-full h-full object-cover" />}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-30 transition-all duration-700">
-                        {React.cloneElement(categories.find(c => c.name === member.category)?.icon || <Briefcase />, { size: 180 })}
-                    </div>
-            <div className="absolute top-6 left-6">
-                        <span className="bg-white/95 backdrop-blur-md px-5 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest text-primary shadow-2xl">{member.category}</span>
-                    </div>
+      {filteredMembers.map(member => (
+        <article key={member.id} onClick={() => onSelectProfile(member.id)} className="surface-card rounded-[2.5rem] overflow-hidden flex flex-col group border border-white/5 bg-surface-2 shadow-2xl cursor-pointer">
+          <div className="h-56 relative overflow-hidden">
+            <img src={member.businessPhoto || member.profilePhoto || "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600"} 
+              alt={member.business} 
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-surface-2 via-transparent to-transparent opacity-80"></div>
+            <div className="absolute top-5 left-5">
+              <div className="cat-tag">{member.category}</div>
+            </div>
+          </div>
+          <div className="p-8 flex-grow flex flex-col">
+            <h3 className="font-headline text-2xl font-bold mb-2 tracking-tight group-hover:text-primary-container transition-colors" style={{color:'var(--clr-on-surface)'}}>{member.business}</h3>
+            <div className="flex items-center gap-2 text-sm mb-6 opacity-60" style={{color:'var(--clr-on-surface-variant)'}}>
+              <MapPin size={16} style={{color:'var(--clr-primary-container)'}} />
+              <span>{member.location}</span>
+            </div>
+            <div className="p-6 rounded-3xl mb-8 flex-grow" style={{background:'var(--clr-surface-3)', border:'1px solid var(--clr-border)'}}>
+              <p className="text-sm leading-relaxed italic mb-6 opacity-70" style={{color:'var(--clr-on-surface-variant)'}}>
+                "{member.description || 'Layanan berkualitas dengan integritas yang terjaga melalui kurasi komunitas.'}"
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm text-white" style={{background:'var(--clr-primary-container)'}}>{member.name[0]}</div>
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest block opacity-50" style={{color:'var(--clr-on-surface-variant)'}}>Owner</span>
+                  <span className="text-base font-bold" style={{color:'var(--clr-on-surface)'}}>{member.name}</span>
                 </div>
-          <div className="p-8 relative flex-grow flex flex-col">
-            <h3 className="text-2xl font-black text-primary mb-2 tracking-tight group-hover:text-secondary transition-colors leading-tight">{member.business}</h3>
-                    <div className="flex items-center gap-2 text-on-surface-variant font-bold text-sm mb-10">
-                        <MapPin size={16} className="text-primary" />
-                        <span>{member.location}</span>
-                    </div>
-
-            <div className="p-6 bg-surface-container-low rounded-2xl mb-8 flex-grow">
-                        <p className="text-sm font-medium leading-relaxed opacity-60 italic mb-6 line-clamp-2">
-                            {member.description || "Layanan berkualitas dengan integritas yang terjaga melalui kurasi komunitas."}
-                        </p>
-                        <div className="flex items-center gap-3">
-                             <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-xs">
-                                {member.name[0]}
-                             </div>
-                             <div>
-                                <span className="text-[10px] font-black text-outline uppercase tracking-widest block">Owner</span>
-                                <span className="text-sm font-black text-on-surface">{member.name}</span>
-                             </div>
-                        </div>
-                    </div>
-
-                    <div className="flex gap-4">
-                        <button 
-                            onClick={() => onSelectProfile(member.id)}
-                          className="flex-grow py-4 bg-primary text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-secondary transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-3"
-                        >
-                            Lihat Profil Bisnis <ArrowRight size={16} />
-                        </button>
-                    </div>
-                </div>
-            </article>
-        ))}
+              </div>
+            </div>
+            <button
+              onClick={() => onSelectProfile(member.id)}
+              className="btn-primary w-full py-4 rounded-2xl font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-3"
+            >
+              Lihat Profil Bisnis <ArrowRight size={18} />
+            </button>
+          </div>
+        </article>
+      ))}
     </div>
   </div>
 );
 
-
 const AboutPage = () => (
-  <div className="animate-in fade-in duration-700 max-w-7xl mx-auto px-6 sm:px-8 py-16 space-y-10">
-    <section className="relative overflow-hidden rounded-[2.5rem] section-frame bg-white/85 p-10 sm:p-14">
-      <div className="absolute inset-0 opacity-25">
-        <img className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=2000" alt="Medan Business Atmosphere" />
-      </div>
+  <div className="animate-in fade-in duration-700 max-w-7xl mx-auto px-6 sm:px-8 py-24 lg:py-32 space-y-16">
+    <section className="relative overflow-hidden rounded-[3rem] p-12 sm:p-20 border border-white/5" style={{background:'linear-gradient(135deg, rgba(77,142,255,0.1) 0%, var(--clr-surface-3) 100%)'}}>
+      <div className="orb w-[500px] h-[500px] bg-primary/10 -top-40 -right-40" style={{filter:'blur(100px)'}}></div>
       <div className="relative z-10 max-w-3xl">
-        <span className="inline-block px-4 py-2 mb-6 rounded-full bg-secondary/10 text-secondary font-black text-[10px] tracking-[0.35em] uppercase">Visi Kami</span>
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-primary leading-tight tracking-tight mb-6">Kurasi profesional dengan standar yang lebih tinggi.</h1>
-        <p className="text-base sm:text-lg text-on-surface-variant leading-relaxed font-medium opacity-85">Kami membangun ekosistem bisnis Medan yang lebih sehat: terhubung, terverifikasi, dan punya peluang kolaborasi nyata.</p>
+        <span className="font-label tracking-[0.3em] uppercase text-xs mb-6 block" style={{color:'var(--clr-primary-container)'}}>Visi Kami</span>
+        <h1 className="font-headline text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-8" style={{color:'var(--clr-on-surface)'}}>
+          Kurasi profesional <span className="gradient-text">dengan standar </span> lebih tinggi.
+        </h1>
+        <p className="text-lg sm:text-xl leading-relaxed" style={{color:'var(--clr-on-surface-variant)'}}>Kami membangun ekosistem bisnis Medan yang lebih sehat: terhubung, terverifikasi, dan memiliki akses eksklusif ke intelijen bisnis daerah.</p>
       </div>
     </section>
 
-    <section className="grid lg:grid-cols-12 gap-8 items-stretch">
-      <div className="lg:col-span-7 bg-white rounded-[2rem] border border-outline-variant/20 p-8 sm:p-10 shadow-sm">
-        <h2 className="text-3xl sm:text-4xl font-black text-primary tracking-tight mb-6">Misi yang fokus pada dampak</h2>
-        <p className="text-on-surface-variant leading-relaxed font-medium mb-8">MEDAN BUSINESS bukan sekadar wadah berkumpul. Komunitas ini dirancang sebagai akselerator untuk membuka koneksi, peluang proyek, dan pertumbuhan jangka panjang.</p>
-        <div className="grid sm:grid-cols-3 gap-4">
-          <div className="rounded-2xl bg-surface-container-low p-5 border border-outline-variant/25">
-            <Verified className="text-primary mb-3" size={26} />
-            <p className="text-sm font-black text-primary mb-1">Kurasi Ketat</p>
-            <p className="text-xs text-on-surface-variant font-medium">Validasi rekam jejak anggota.</p>
-          </div>
-          <div className="rounded-2xl bg-surface-container-low p-5 border border-outline-variant/25">
-            <Handshake className="text-primary mb-3" size={26} />
-            <p className="text-sm font-black text-primary mb-1">Kolaborasi Nyata</p>
-            <p className="text-xs text-on-surface-variant font-medium">Mendorong kerja sama lintas sektor.</p>
-          </div>
-          <div className="rounded-2xl bg-surface-container-low p-5 border border-outline-variant/25">
-            <Target className="text-primary mb-3" size={26} />
-            <p className="text-sm font-black text-primary mb-1">Pertumbuhan Terukur</p>
-            <p className="text-xs text-on-surface-variant font-medium">Arah bisnis lebih tajam dan sehat.</p>
-          </div>
+    <section className="grid lg:grid-cols-12 gap-10">
+      <div className="lg:col-span-12 surface-card rounded-[3rem] p-12 sm:p-16 border border-white/5">
+        <h2 className="font-headline text-3xl sm:text-4xl font-bold tracking-tight mb-6" style={{color:'var(--clr-on-surface)'}}>Misi yang fokus pada dampak jangka panjang</h2>
+        <p className="leading-relaxed mb-12 text-lg max-w-4xl" style={{color:'var(--clr-on-surface-variant)'}}>MEDAN BUSINESS PRO dirancang sebagai akselerator bagi pemilik bisnis untuk menjalin kerja sama strategis, berbagi peluang proyek, dan memperkuat basis ekonomi lokal.</p>
+        <div className="grid sm:grid-cols-3 gap-8">
+          {[
+            { icon: 'verified_user', title: 'Kurasi Ketat', desc: 'Hanya individu dengan rekam jejak integritas tinggi yang tergabung.' },
+            { icon: 'handshake', title: 'Kolaborasi Nyata', desc: 'Kami tidak hanya networking, kami mengeksekusi proyek bersama.' },
+            { icon: 'track_changes', title: 'Pertumbuhan Terukur', desc: 'Membantu member naik level melalui wawasan bisnis regional.' }
+          ].map((item,i) => (
+            <div key={i} className="rounded-3xl p-8 transition-colors border border-white/5" style={{background:'var(--clr-surface-3)'}}>
+              <div className="mb-6" style={{color:'var(--clr-primary-container)'}}>
+                 <span className="material-symbols-outlined text-[32px]">{item.icon}</span>
+              </div>
+              <p className="font-headline text-xl font-bold mb-3" style={{color:'var(--clr-on-surface)'}}>{item.title}</p>
+              <p className="text-sm leading-relaxed" style={{color:'var(--clr-on-surface-variant)'}}>{item.desc}</p>
+            </div>
+          ))}
         </div>
-      </div>
-      <div className="lg:col-span-5 rounded-[2rem] overflow-hidden border border-outline-variant/20 shadow-sm min-h-[320px]">
-        <img className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop" alt="Collaboration" />
       </div>
     </section>
   </div>
 );
 
 const ResourcesPage = () => (
-  <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-6 sm:px-8 py-16 space-y-8">
-    <section className="relative overflow-hidden rounded-[2.5rem] bg-primary p-10 sm:p-12 text-white shadow-2xl">
+  <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-6 sm:px-8 py-24 lg:py-32 space-y-16">
+    <section className="relative overflow-hidden rounded-[3rem] p-12 sm:p-20 border border-white/5" style={{background:'linear-gradient(135deg, rgba(78,222,163,0.1) 0%, var(--clr-surface-3) 100%)'}}>
+      <div className="orb w-[400px] h-[400px] bg-tertiary/10 -right-32 -bottom-32" style={{filter:'blur(80px)'}}></div>
       <div className="relative z-10 max-w-3xl">
-        <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-[0.35em] mb-6">Pusat Pengetahuan</span>
-        <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-5 leading-tight">Sumber daya siap pakai untuk pertumbuhan bisnis.</h1>
-        <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-8 font-medium">Akses template legal, modul operasional, dan dokumen strategi yang dirancang praktis untuk kebutuhan harian anggota.</p>
-        <div className="flex flex-wrap gap-3">
-          <button className="bg-white text-primary px-7 py-3 rounded-xl font-black text-sm hover:shadow-xl transition-all">Unduh Paket Populer</button>
-          <button className="bg-transparent border border-white/30 text-white px-7 py-3 rounded-xl font-black text-sm hover:bg-white/10 transition-all">Ajukan Resource Baru</button>
+        <span className="font-label tracking-[0.3em] uppercase text-xs mb-6 block" style={{color:'var(--clr-tertiary)'}}>Pusat Pengetahuan</span>
+        <h1 className="font-headline text-5xl sm:text-6xl font-bold tracking-tight mb-8 leading-[1.1]" style={{color:'var(--clr-on-surface)'}}>Sumber daya eksklusif untuk <span className="gradient-text">pertumbuhan bisnis</span> Anda.</h1>
+        <p className="text-lg leading-relaxed mb-10 opacity-80" style={{color:'var(--clr-on-surface-variant)'}}>Akses template legal, modul operasional, dan dokumen strategi rahasia yang dirancang khusus untuk pasar lokal.</p>
+        <div className="flex flex-wrap gap-4">
+          <button className="btn-primary px-10 py-4 rounded-2xl">Unduh Paket Emas</button>
+          <button className="btn-outline px-10 py-4 rounded-2xl">Ajukan Request</button>
         </div>
       </div>
-      <div className="absolute -right-32 -bottom-32 w-[420px] h-[420px] bg-secondary/30 rounded-full blur-[120px]"></div>
     </section>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-                { title: "Panduan Dasar Bisnis", format: "PDF", size: "12.4 MB", desc: "Kerangka kerja komprehensif membangun fondasi bisnis kuat.", icon: <Download />, color: "bg-red-50 text-red-600" },
-                { title: "Template Proyeksi Finansial", format: "XLSX", size: "2.1 MB", desc: "Model spreadsheet siap pakai untuk hitung runway pendapatan.", icon: <Download />, color: "bg-green-50 text-green-600" },
-                { title: "Draft NDA Standar Komunitas", format: "DOCX", size: "450 KB", desc: "Dokumen hukum dasar proteksi kekayaan intelektual.", icon: <Gavel />, color: "bg-blue-50 text-blue-600" },
-                { title: "Dek Pitch Investor Sukses", format: "PPTX", size: "18.2 MB", desc: "Koleksi slide presentasi berhasil raih pendanaan.", icon: <Video />, color: "bg-purple-50 text-purple-600" },
-                { title: "SOP Operasional Retail", format: "DOCX", size: "3.5 MB", desc: "Standard Operating Procedure untuk bisnis ritel modern.", icon: <Briefcase />, color: "bg-orange-50 text-orange-600" },
-                { title: "Strategi Digital Marketing", format: "PDF", size: "8.9 MB", desc: "Panduan pemasaran di era digital kota besar.", icon: <Target />, color: "bg-indigo-50 text-indigo-600" }
-            ].map((item, idx) => (
-              <div key={idx} className="group bg-white p-7 rounded-[1.5rem] border border-outline-variant/20 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <div className="flex justify-between items-start mb-5">
-                  <div className={`${item.color} p-4 rounded-xl shadow-inner`}>
-                            {React.cloneElement(item.icon, { size: 40 })}
-                        </div>
-                        <span className="text-[10px] font-black uppercase tracking-widest opacity-30">{item.format}</span>
-                    </div>
-                <h3 className="text-xl font-black text-primary mb-3 tracking-tight group-hover:text-secondary transition-colors">{item.title}</h3>
-                <p className="text-on-surface-variant font-medium text-sm leading-relaxed mb-7 opacity-70">{item.desc}</p>
-                <div className="flex justify-between items-center pt-5 border-t border-outline-variant/20">
-                        <span className="text-xs font-black opacity-30 tracking-widest">{item.size}</span>
-                  <button className="flex items-center gap-2 text-primary font-black text-xs uppercase tracking-wider hover:gap-3 transition-all">
-                    Unduh <ArrowRight size={16} />
-                        </button>
-                    </div>
-                </div>
-            ))}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {[
+        { title: 'Panduan Dasar Bisnis', format: 'PDF', size: '12.4 MB', desc: 'Kerangka kerja komprehensif membangun fondasi bisnis yang sehat.', clr: 'var(--clr-error)' },
+        { title: 'Template Proyeksi Finansial', format: 'XLSX', size: '2.1 MB', desc: 'Model spreadsheet untuk menghitung runway dan profitabilitas.', clr: 'var(--clr-tertiary)' },
+        { title: 'Draft NDA Standar Komunitas', format: 'DOCX', size: '450 KB', desc: 'Dokumen hukum dasar untuk melindungi kekayaan intelektual.', clr: 'var(--clr-primary-container)' },
+        { title: 'Pitch Deck Success Model', format: 'PPTX', size: '18.2 MB', desc: 'Slide presentasi untuk memenangkan pendanaan investor.', clr: '#a855f7' },
+        { title: 'SOP Operasional Retail', format: 'DOCX', size: '3.5 MB', desc: 'Standard Operating Procedure untuk otomasi bisnis ritel.', clr: '#f97316' },
+        { title: 'Strategi Digital Lokasi Lokal', format: 'PDF', size: '8.9 MB', desc: 'Panduan pemasaran digital spesifik untuk market Sumatera Utara.', clr: 'var(--clr-primary)' }
+      ].map((item, idx) => (
+        <div key={idx} className="surface-card p-10 rounded-[2.5rem] group border border-white/5 bg-surface-2 shadow-xl">
+          <div className="flex justify-between items-start mb-8">
+            <div className="p-4 rounded-2xl" style={{background:`${item.clr}15`, border:`1px solid ${item.clr}30`}}>
+              <span className="material-symbols-outlined text-[28px]" style={{color:item.clr}}>download</span>
+            </div>
+            <span className="text-[10px] font-bold uppercase tracking-widest opacity-60" style={{color:item.clr}}>{item.format}</span>
+          </div>
+          <h3 className="font-headline text-xl font-bold mb-3 tracking-tight group-hover:text-primary transition-colors" style={{color:'var(--clr-on-surface)'}}>{item.title}</h3>
+          <p className="text-sm leading-relaxed mb-10 opacity-70" style={{color:'var(--clr-on-surface-variant)'}}>{item.desc}</p>
+          <div className="flex justify-between items-center pt-6 border-t border-white/5">
+            <span className="text-xs font-bold opacity-40" style={{color:'var(--clr-on-surface-variant)'}}>{item.size}</span>
+            <button className="flex items-center gap-2 font-bold text-xs uppercase tracking-widest hover:gap-3 transition-all" style={{color:'var(--clr-primary-container)'}}>Unduh <ArrowRight size={14} /></button>
+          </div>
         </div>
+      ))}
     </div>
+  </div>
 );
 
 const JoinPage = () => (
-  <div className="animate-in slide-in-from-bottom-10 duration-700 max-w-6xl mx-auto px-6 sm:px-8 py-16">
-    <header className="text-center mb-12 max-w-4xl mx-auto">
-      <span className="inline-block px-4 py-2 bg-primary/10 text-primary font-black text-[10px] tracking-[0.35em] uppercase mb-6">AKSES EKSKLUSIF</span>
-      <h1 className="text-4xl sm:text-5xl font-black text-primary tracking-tight mb-5 leading-tight">Gabung komunitas bisnis yang lebih terkurasi.</h1>
-      <p className="text-base sm:text-lg text-on-surface-variant leading-relaxed opacity-80 font-medium">Isi data Anda singkat, lalu lanjutkan proses verifikasi lewat admin. Kami fokus pada kualitas member dan kolaborasi jangka panjang.</p>
+  <div className="animate-in slide-in-from-bottom-10 duration-1000 max-w-4xl mx-auto px-6 sm:px-8 py-24 lg:py-32">
+    <header className="text-center mb-20 max-w-3xl mx-auto">
+      <span className="font-label tracking-[0.3em] uppercase text-xs mb-6 block" style={{color:'var(--clr-primary-container)'}}>Aplikasi Keanggotaan</span>
+      <h1 className="font-headline text-5xl sm:text-6xl font-bold tracking-tight mb-8 leading-[1.1]" style={{color:'var(--clr-on-surface)'}}>
+        Gabung komunitas bisnis <span className="gradient-text">paling terkurasi.</span>
+      </h1>
+      <p className="text-lg leading-relaxed opacity-80" style={{color:'var(--clr-on-surface-variant)'}}>Aplikasi Anda akan ditinjau manual oleh tim pengurus untuk menjaga kualitas ekosistem.</p>
     </header>
-
-    <div className="bg-white rounded-[2.5rem] shadow-[0_50px_100px_-40px_rgba(0,0,0,0.2)] p-8 sm:p-12 border border-outline-variant/30 flex flex-col items-center">
-       <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center text-white mb-8 animate-pulse">
-                <Sparkles size={48} />
-             </div>
-       <h2 className="text-3xl font-black text-primary mb-4 tracking-tight text-center">Permintaan Verifikasi Keanggotaan</h2>
-       <p className="text-sm sm:text-base text-on-surface-variant text-center mb-10 opacity-70 max-w-2xl">Aplikasi Anda akan ditinjau manual oleh tim pengurus. Pastikan biodata dan profil bisnis diisi dengan jelas.</p>
-             
-       <form className="w-full max-w-3xl space-y-5">
-         <div className="grid md:grid-cols-2 gap-4">
-          <input className="w-full bg-surface-container-low border border-outline-variant/25 rounded-2xl p-4 focus:ring-4 focus:ring-primary/10 text-base font-bold transition-all" placeholder="Nama Lengkap" />
-          <input className="w-full bg-surface-container-low border border-outline-variant/25 rounded-2xl p-4 focus:ring-4 focus:ring-primary/10 text-base font-bold transition-all" placeholder="Bidang Keahlian" />
-                 </div>
-         <input className="w-full bg-surface-container-low border border-outline-variant/25 rounded-2xl p-4 focus:ring-4 focus:ring-primary/10 text-base font-bold transition-all" placeholder="Link Profil Instagram / LinkedIn" />
-         <textarea className="w-full bg-surface-container-low border border-outline-variant/25 rounded-2xl p-4 focus:ring-4 focus:ring-primary/10 text-base font-bold transition-all min-h-[180px]" placeholder="Deskripsikan nilai yang ingin Anda tawarkan kepada komunitas..." />
-                  <a
-                    href={buildWhatsAppLink('Halo Tim Medan Business, saya ingin mengajukan aplikasi keanggotaan. Mohon panduannya.')}
-                    target="_blank"
-                    rel="noreferrer"
-          className="w-full inline-flex justify-center bg-primary text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-secondary hover:shadow-xl transition-all shadow-lg"
-                  >
-                    Ajukan Aplikasi Keanggotaan
-                  </a>
-             </form>
+    <div className="surface-card rounded-[3rem] p-12 sm:p-16 flex flex-col items-center border border-white/5 bg-surface-2 shadow-2xl">
+      <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-10 shadow-xl" style={{background:'linear-gradient(135deg, var(--clr-primary-container), var(--clr-inverse-primary))'}}>
+         <span className="material-symbols-outlined text-[36px] text-white">verified</span>
+      </div>
+      <h2 className="font-headline text-3xl font-bold mb-3 text-center" style={{color:'var(--clr-on-surface)'}}>Permintaan Verifikasi</h2>
+      <p className="text-center mb-12 text-base max-w-lg opacity-60" style={{color:'var(--clr-on-surface-variant)'}}>Isi data singkat berikut, tim kami akan memverifikasi dalam 1-2 hari kerja.</p>
+      <form className="w-full space-y-6">
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label className="text-[10px] font-bold uppercase tracking-widest opacity-50 ml-2">Nama Lengkap</label>
+            <input className="input-field w-full rounded-2xl p-5 text-base" placeholder="Contoh: Ridho Robi" />
+          </div>
+          <div className="space-y-2">
+            <label className="text-[10px] font-bold uppercase tracking-widest opacity-50 ml-2">Bidang Keahlian / Industri</label>
+            <input className="input-field w-full rounded-2xl p-5 text-base" placeholder="F&B, Agensi, Properti..." />
+          </div>
         </div>
+        <div className="space-y-2">
+          <label className="text-[10px] font-bold uppercase tracking-widest opacity-50 ml-2">Link Profil Bisnis (IG/LinkedIn/Web)</label>
+          <input className="input-field w-full rounded-2xl p-5 text-base" placeholder="https://..." />
+        </div>
+        <div className="space-y-2">
+          <label className="text-[10px] font-bold uppercase tracking-widest opacity-50 ml-2">Visi Bergabung (Singkat)</label>
+          <textarea className="input-field w-full rounded-2xl p-5 text-base min-h-[160px]" placeholder="Apa yang ingin Anda dapatkan dan tawarkan di ekosistem ini?" />
+        </div>
+        <a
+          href={buildWhatsAppLink('Halo Medan Business Pro, saya ingin mengajukan aplikasi keanggotaan. Mohon panduannya.')}
+          target="_blank" rel="noreferrer"
+          className="btn-primary w-full inline-flex justify-center items-center py-5 rounded-2xl font-bold text-sm uppercase tracking-widest gap-3 mt-4"
+        >
+          Submit & Lanjut ke WhatsApp
+        </a>
+      </form>
     </div>
+  </div>
 );
 
 const EventsPage = ({ events }) => (
-  <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-6 sm:px-8 py-16">
-    <header className="mb-10 text-center max-w-3xl mx-auto">
-      <h1 className="text-4xl sm:text-5xl font-black text-primary tracking-tight mb-4">Kopdar & Agenda</h1>
-      <p className="text-base sm:text-lg text-on-surface-variant font-medium opacity-75">Sinergi terbaik lahir dari pertemuan rutin. Pilih agenda yang relevan untuk bisnis Anda.</p>
+  <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-6 sm:px-8 py-24 lg:py-32">
+    <header className="mb-20 text-center max-w-3xl mx-auto">
+      <span className="font-label tracking-[0.3em] uppercase text-xs mb-4 block" style={{color:'var(--clr-primary-container)'}}>Agenda Komunitas</span>
+      <h1 className="font-headline text-5xl sm:text-6xl font-bold tracking-tight mb-8" style={{color:'var(--clr-on-surface)'}}>Kopdar & <span className="gradient-text">Agenda</span></h1>
+      <p className="text-lg leading-relaxed opacity-80" style={{color:'var(--clr-on-surface-variant)'}}>Pertemuan rutin untuk mempererat sinergi dan kolaborasi antar member MedanPro.</p>
     </header>
-
-    <div className="grid gap-6">
-            {events.map(event => (
-        <div key={event.id} className="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-outline-variant/20 flex flex-col lg:flex-row group hover:shadow-xl transition-all duration-300">
-          <div className="w-full lg:w-44 bg-primary p-7 flex lg:flex-col items-center justify-center text-white shrink-0 group-hover:bg-secondary transition-colors duration-300 gap-3">
-            <span className="text-xs font-black uppercase tracking-[0.35em] opacity-70">{event.month}</span>
-            <span className="text-5xl font-black leading-none">{event.day}</span>
-                    </div>
-          <div className="p-7 sm:p-8 flex-grow flex flex-col justify-center">
-            <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest mb-4">{event.type}</span>
-            <h3 className="text-2xl sm:text-3xl font-black text-primary mb-3 tracking-tight leading-tight group-hover:text-secondary transition-colors">{event.title}</h3>
-            <p className="text-sm sm:text-base text-on-surface-variant font-medium leading-relaxed opacity-70 mb-6 max-w-3xl">{event.desc}</p>
-            <div className="flex flex-wrap gap-6 pt-6 border-t border-outline-variant/20">
-              <div className="flex items-center gap-2 text-sm font-bold text-on-surface/80">
-                <MapPin size={18} className="text-primary" /> {event.location}
-                            </div>
-              <div className="flex items-center gap-2 text-sm font-bold text-on-surface/80">
-                <Clock size={18} className="text-primary" /> 19.30 WIB - Selesai
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            ))}
+    <div className="grid gap-10">
+      {events.map(event => (
+        <div key={event.id} className="surface-card rounded-[2.5rem] overflow-hidden flex flex-col lg:flex-row group border border-white/5 shadow-2xl">
+          <div className="w-full lg:w-48 p-10 flex lg:flex-col items-center justify-center text-on-primary-container shrink-0 gap-3" style={{background:'var(--gradient-primary-btn)'}}>
+            <span className="text-xs font-bold uppercase tracking-widest opacity-70">{event.month}</span>
+            <span className="text-7xl font-headline font-bold leading-none">{event.day}</span>
+          </div>
+          <div className="p-10 flex-grow flex flex-col justify-center">
+            <span className="cat-tag mb-6 w-fit">{event.type}</span>
+            <h3 className="font-headline text-3xl font-bold mb-4 tracking-tight group-hover:text-primary-container transition-colors" style={{color:'var(--clr-on-surface)'}}>{event.title}</h3>
+            <p className="text-base leading-relaxed mb-8 max-w-3xl opacity-70" style={{color:'var(--clr-on-surface-variant)'}}>{event.desc}</p>
+            <div className="flex flex-wrap gap-8 pt-8 border-t border-white/5">
+              <div className="flex items-center gap-3 text-sm font-bold" style={{color:'var(--clr-on-surface)'}}>  
+                <MapPin size={18} style={{color:'var(--clr-primary-container)'}} /> {event.location}
+              </div>
+              <div className="flex items-center gap-3 text-sm font-bold" style={{color:'var(--clr-on-surface)'}}>
+                <Clock size={18} style={{color:'var(--clr-primary-container)'}} /> 19.30 WIB - Selesai
+              </div>
+              <a 
+                href={buildWhatsAppLink(`Halo MedanPro, saya ingin konfirmasi kehadiran untuk agenda: ${event.title}.`)}
+                target="_blank" rel="noreferrer"
+                className="lg:ml-auto text-xs font-bold uppercase tracking-widest overflow-hidden relative group/btn py-2 px-1 hover:text-primary transition-colors"
+              >
+                Konfirmasi Kehadiran
+                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-container group-hover/btn:w-full transition-all"></div>
+              </a>
+            </div>
+          </div>
         </div>
+      ))}
     </div>
+  </div>
 );
 
 const OpportunitiesPage = ({ opportunities }) => (
-  <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-6 sm:px-8 py-16">
-    <div className="flex flex-col md:flex-row justify-between md:items-end mb-10 gap-5">
-      <div className="text-center md:text-left max-w-2xl">
-        <h1 className="text-4xl sm:text-5xl font-black text-primary tracking-tight mb-4 leading-tight">Peluang & Sinergi Bisnis</h1>
-        <p className="text-base sm:text-lg text-on-surface-variant font-medium opacity-75">Ruang kolaborasi strategis bagi anggota untuk berbagi kebutuhan suplai, proyek, dan kemitraan.</p>
-            </div>
-            <a
-              href={buildWhatsAppLink('Halo Tim Medan Business, saya ingin posting peluang kolaborasi bisnis di komunitas.')}
-              target="_blank"
-              rel="noreferrer"
-        className="bg-primary text-white px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:shadow-xl transition-all shadow-lg flex items-center gap-3"
-            >
-        <Megaphone size={18} /> Posting Peluang
-            </a>
-        </div>
-
-    <div className="grid gap-5">
-            {opportunities.map(opp => (
-        <div key={opp.id} className="bg-white p-6 sm:p-7 rounded-[2rem] border border-outline-variant/20 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row gap-6 items-start md:items-center">
-          <div className="w-20 h-20 bg-primary-container/10 rounded-2xl flex items-center justify-center text-primary shrink-0 shadow-inner group">
-                        {opp.icon === 'car' ? <Car size={64} /> : 
-                         opp.icon === 'video' ? <Video size={64} /> : 
-                         opp.icon === 'star' ? <Star size={64} /> : 
-                         <ShoppingBag size={64} />}
-                    </div>
-                    <div className="flex-grow">
-            <div className="flex flex-wrap items-center gap-3 mb-3">
-              <span className="bg-secondary/10 text-secondary px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">{opp.type}</span>
-                            <span className="text-xs font-bold text-outline uppercase tracking-widest opacity-50 ml-auto">PIC: {opp.postedBy}</span>
-                        </div>
-            <h3 className="text-2xl sm:text-3xl font-black text-primary mb-3 tracking-tight leading-tight">{opp.title}</h3>
-            <p className="text-sm sm:text-base text-on-surface-variant font-medium leading-relaxed opacity-70 mb-0">{opp.desc}</p>
-                    </div>
-                    <div className="shrink-0">
-            <button className="px-6 py-3 bg-primary text-white rounded-xl font-black uppercase tracking-widest text-xs hover:bg-secondary transition-all shadow-lg">
-                            Ambil Peluang
-                        </button>
-                    </div>
-                </div>
-            ))}
-        </div>
+  <div className="animate-in fade-in duration-500 max-w-7xl mx-auto px-6 sm:px-8 py-24 lg:py-32">
+    <div className="flex flex-col md:flex-row justify-between md:items-end mb-16 gap-8">
+      <div className="max-w-2xl">
+        <span className="font-label tracking-[0.3em] uppercase text-xs mb-4 block" style={{color:'var(--clr-tertiary)'}}>Peluang Eksklusif</span>
+        <h1 className="font-headline text-5xl sm:text-6xl font-bold tracking-tight mb-6 leading-[1.1]" style={{color:'var(--clr-on-surface)'}}>
+          Sinergi <span className="gradient-text">& Kolaborasi</span>
+        </h1>
+        <p className="text-lg leading-relaxed opacity-80" style={{color:'var(--clr-on-surface-variant)'}}>Ruang strategis bagi member untuk berbagi kebutuhan project, supply chain, dan kemitraan modal.</p>
+      </div>
+      <a href={buildWhatsAppLink('Halo MedanPro, saya ingin posting peluang kolaborasi.')}
+        target="_blank" rel="noreferrer"
+        className="btn-primary px-8 py-4 rounded-2xl flex items-center gap-3 shrink-0">
+        <span className="material-symbols-outlined text-[20px]">add_circle</span> Posting Peluang
+      </a>
     </div>
+    <div className="grid gap-6">
+      {opportunities.map(opp => (
+        <div key={opp.id} className="surface-card p-8 sm:p-10 rounded-[2.5rem] flex flex-col md:flex-row gap-8 items-start md:items-center border border-white/5 bg-surface-2 shadow-xl">
+          <div className="w-20 h-20 rounded-3xl flex items-center justify-center shrink-0 shadow-lg" style={{background:'rgba(77,142,255,0.08)', border:'1px solid rgba(77,142,255,0.15)', color:'var(--clr-primary-container)'}}>
+            <span className="material-symbols-outlined text-[36px]">
+              {opp.icon === 'car' ? 'directions_car' : opp.icon === 'video' ? 'videocam' : opp.icon === 'star' ? 'auto_awesome' : 'business_center'}
+            </span>
+          </div>
+          <div className="flex-grow">
+            <div className="flex flex-wrap items-center gap-4 mb-3">
+              <div className="cat-tag">{opp.type}</div>
+              <span className="text-[10px] ml-auto font-bold uppercase tracking-widest opacity-40 font-label" style={{color:'var(--clr-on-surface-variant)'}}>PIC: {opp.postedBy}</span>
+            </div>
+            <h3 className="font-headline text-2xl font-bold mb-2 tracking-tight group-hover:text-primary transition-colors" style={{color:'var(--clr-on-surface)'}}>{opp.title}</h3>
+            <p className="text-base leading-relaxed opacity-70" style={{color:'var(--clr-on-surface-variant)'}}>{opp.desc}</p>
+          </div>
+          <a 
+            href={buildWhatsAppLink(`Halo MedanPro, saya tertarik untuk kolaborasi mengenai peluang: ${opp.title}. Mohon informasikan langkah selanjutnya.`)}
+            target="_blank" rel="noreferrer"
+            className="btn-primary shrink-0 px-8 py-4 rounded-2xl flex items-center gap-2 group-hover:translate-x-1 transition-transform"
+          >
+            Ambil Opportunity <ArrowRight size={16} />
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
 );
 
-
-// --- ADMIN LOGIN PAGE ---
-
-const AdminLoginPage = ({ onLogin }) => {
-  const [pass, setPass] = useState('');
-  const [error, setError] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (pass === 'admin123') { // Simple hardcoded password
-      onLogin();
-    } else {
-      setError(true);
-      setTimeout(() => setError(false), 2000);
-    }
-  };
+const PersonalProfilePage = ({ members }) => {
+  const { id } = useParams();
+  const member = members.find(m => m.id === parseInt(id));
+  if (!member) return <div className="py-32 text-center font-headline text-2xl font-bold">Member tidak ditemukan</div>;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-surface-container-low px-8">
-      <div className="bg-white p-16 rounded-[4rem] shadow-4xl border border-outline-variant/10 w-full max-w-md animate-in zoom-in-95 duration-500">
-        <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center text-primary mx-auto mb-10">
-          <Lock size={40} />
+    <div className="animate-in fade-in zoom-in-95 duration-700 max-w-5xl mx-auto px-6 sm:px-8 py-24 lg:py-32">
+      <div className="surface-card rounded-[3rem] overflow-hidden border border-white/5 bg-surface-2 shadow-2xl">
+        <div className="h-64 relative overflow-hidden" style={{background:'var(--gradient-primary-btn)'}}>
+           <div className="absolute inset-0 opacity-20" style={{backgroundImage:'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize:'40px 40px'}}></div>
+           <div className="absolute -bottom-20 left-12 w-48 h-48 rounded-full border-[8px] border-surface-2 overflow-hidden shadow-2xl bg-surface-3">
+              {member.profilePhoto 
+                ? <img src={member.profilePhoto} alt={member.name} className="w-full h-full object-cover" />
+                : <div className="w-full h-full flex items-center justify-center font-headline font-bold text-6xl" style={{color:'var(--clr-primary-container)'}}>{member.name[0]}</div>
+              }
+           </div>
         </div>
-        <h2 className="text-4xl font-black text-primary tracking-tighter text-center mb-4">Akses Terbatas</h2>
-        <p className="text-on-surface-variant font-medium text-center opacity-60 mb-12">Hanya untuk pengurus komunitas.</p>
-        
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <input 
-            type="password" 
-            placeholder="Masukkan Kode Akses" 
-            className={`w-full p-6 bg-surface-container-low border-none rounded-2xl font-black text-center tracking-[0.5em] transition-all ${error ? 'ring-4 ring-red-500/20 text-red-500' : 'focus:ring-8 focus:ring-primary/10'}`}
-            value={pass}
-            onChange={(e) => setPass(e.target.value)}
-          />
-          {error && <p className="text-center text-red-500 text-[10px] font-black uppercase tracking-widest animate-bounce">Kode Salah!</p>}
-          <button type="submit" className="w-full bg-primary text-white py-6 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-secondary transition-all shadow-xl">
-            Verifikasi Sesi
-          </button>
-        </form>
+        <div className="pt-32 pb-16 px-12">
+           <div className="flex flex-col md:flex-row justify-between items-start gap-8">
+              <div className="max-w-2xl">
+                 <h1 className="font-headline text-5xl font-bold tracking-tight mb-3" style={{color:'var(--clr-on-surface)'}}>{member.name}</h1>
+                 <p className="font-label text-sm font-bold uppercase tracking-[0.2em] mb-8" style={{color:'var(--clr-primary-container)'}}>{member.age} Tahun • {member.duration} Experience</p>
+                 <div className="space-y-10">
+                    <section>
+                       <h4 className="text-[10px] font-bold uppercase tracking-widest opacity-40 mb-4" style={{color:'var(--clr-on-surface-variant)'}}>Profil Profesional</h4>
+                       <p className="text-xl leading-relaxed font-medium" style={{color:'var(--clr-on-surface)'}}>{member.aboutMe || "Seorang profesional berdedikasi yang berfokus pada kolaborasi dan integritas dalam membangun ekosistem bisnis."}</p>
+                    </section>
+                    <div className="grid sm:grid-cols-2 gap-10">
+                       <section>
+                          <h4 className="text-[10px] font-bold uppercase tracking-widest opacity-40 mb-4" style={{color:'var(--clr-on-surface-variant)'}}>Bisnis Utama</h4>
+                          <Link to={`/profile/business/${member.id}`} className="block p-6 rounded-3xl border border-white/5 hover:bg-white/5 transition-colors" style={{background:'var(--clr-surface-3)'}}>
+                             <p className="font-bold text-lg" style={{color:'var(--clr-on-surface)'}}>{member.business}</p>
+                             <p className="text-xs opacity-60" style={{color:'var(--clr-on-surface-variant)'}}>{member.category} • {member.location}</p>
+                          </Link>
+                       </section>
+                       <section>
+                          <h4 className="text-[10px] font-bold uppercase tracking-widest opacity-40 mb-4" style={{color:'var(--clr-on-surface-variant)'}}>Keahlian Spesifik</h4>
+                          <div className="flex flex-wrap gap-2">
+                             {(member.expertise || "Business Strategy, Leadership").split(',').map((e,i) => (
+                                <span key={i} className="px-5 py-2.5 rounded-full text-xs font-bold border border-white/5" style={{background:'var(--clr-surface-3)', color:'var(--clr-on-surface)'}}>{e.trim()}</span>
+                             ))}
+                          </div>
+                       </section>
+                    </div>
+                 </div>
+              </div>
+              <div className="w-full md:w-auto shrink-0 space-y-4">
+                 <a href={buildWhatsAppLink(`Halo ${member.name}, saya ingin berdiskusi mengenai bisnis Anda.`)} target="_blank" rel="noreferrer" className="btn-primary w-full py-4 px-10 rounded-2xl flex items-center justify-center gap-3">
+                    Hubungi Member <MessageCircle size={18} />
+                 </a>
+                 <Link to="/members" className="btn-outline w-full py-4 px-10 rounded-2xl flex items-center justify-center gap-3">
+                    Kembali ke Direktori
+                 </Link>
+              </div>
+           </div>
+        </div>
       </div>
     </div>
   );
 };
+
+const BusinessProfilePage = ({ members }) => {
+  const { id } = useParams();
+  const member = members.find(m => m.id === parseInt(id));
+  if (!member) return <div className="py-32 text-center font-headline text-2xl font-bold">Unit Bisnis tidak ditemukan</div>;
+
+  return (
+    <div className="animate-in fade-in zoom-in-95 duration-700 max-w-6xl mx-auto px-6 sm:px-8 py-24 lg:py-32">
+      <div className="grid lg:grid-cols-12 gap-10">
+        <div className="lg:col-span-8 space-y-10">
+           <div className="surface-card rounded-[3rem] overflow-hidden border border-white/5 bg-surface-2 shadow-2xl">
+              <div className="h-80 relative">
+                 <img src={member.businessPhoto || "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200"} className="w-full h-full object-cover opacity-60" alt={member.business} />
+                 <div className="absolute inset-0 bg-gradient-to-t from-surface-2 via-transparent to-transparent"></div>
+                 <div className="absolute bottom-8 left-10">
+                    <div className="cat-tag mb-4">{member.category}</div>
+                    <h1 className="font-headline text-5xl font-bold tracking-tight text-white">{member.business}</h1>
+                 </div>
+              </div>
+              <div className="p-10 lg:p-12 space-y-12">
+                 <section>
+                    <h4 className="text-[10px] font-bold uppercase tracking-widest opacity-40 mb-6" style={{color:'var(--clr-on-surface-variant)'}}>Visi Bisnis & Deskripsi</h4>
+                    <p className="text-xl leading-relaxed font-medium" style={{color:'var(--clr-on-surface)'}}>{member.description || "Menyediakan layanan berkualitas dengan standar profesionalisme tinggi yang telah terkurasi oleh komunitas MedanPro."}</p>
+                 </section>
+                 <div className="grid sm:grid-cols-2 gap-8">
+                    <div className="p-8 rounded-[2rem] border border-white/5" style={{background:'var(--clr-surface-3)'}}>
+                       <span className="material-symbols-outlined text-[24px] mb-4" style={{color:'var(--clr-primary-container)'}}>location_on</span>
+                       <p className="text-[10px] font-bold uppercase tracking-widest opacity-40 mb-1" style={{color:'var(--clr-on-surface-variant)'}}>Lokasi Operasional</p>
+                       <p className="font-bold text-lg" style={{color:'var(--clr-on-surface)'}}>{member.location}</p>
+                    </div>
+                    <div className="p-8 rounded-[2rem] border border-white/5" style={{background:'var(--clr-surface-3)'}}>
+                       <span className="material-symbols-outlined text-[24px] mb-4" style={{color:'var(--clr-tertiary)'}}>stars</span>
+                       <p className="text-[10px] font-bold uppercase tracking-widest opacity-40 mb-1" style={{color:'var(--clr-on-surface-variant)'}}>Status Verifikasi</p>
+                       <p className="font-bold text-lg" style={{color:'var(--clr-on-surface)'}}>Business Pro Member</p>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+
+        <div className="lg:col-span-4 space-y-8">
+           <div className="surface-card p-10 rounded-[3rem] border border-white/5 bg-surface-2 shadow-2xl">
+              <h4 className="text-[10px] font-bold uppercase tracking-widest opacity-40 mb-8 text-center" style={{color:'var(--clr-on-surface-variant)'}}>Business Owner</h4>
+              <div className="text-center mb-10">
+                 <div className="w-24 h-24 rounded-3xl mx-auto mb-6 border-2 border-white/10 overflow-hidden shadow-xl" style={{background:'var(--clr-surface-3)'}}>
+                    {member.profilePhoto 
+                      ? <img src={member.profilePhoto} alt={member.name} className="w-full h-full object-cover" />
+                      : <div className="w-full h-full flex items-center justify-center font-headline font-bold text-4xl" style={{color:'var(--clr-primary-container)'}}>{member.name[0]}</div>
+                    }
+                 </div>
+                 <h3 className="font-headline text-2xl font-bold tracking-tight mb-2" style={{color:'var(--clr-on-surface)'}}>{member.name}</h3>
+                 <p className="text-xs font-bold opacity-60" style={{color:'var(--clr-on-surface-variant)'}}>{member.duration} Experience</p>
+              </div>
+              <Link to={`/profile/personal/${member.id}`} className="btn-outline w-full py-4 rounded-2xl flex items-center justify-center gap-3 mb-4">
+                 Lihat Profil Owner
+              </Link>
+              <a href={buildWhatsAppLink(`Halo, saya tertarik dengan unit bisnis ${member.business}. Bisakah berdiskusi?`)} target="_blank" rel="noreferrer" className="btn-primary w-full py-4 rounded-2xl flex items-center justify-center gap-3">
+                 Diskusi Bisnis <ArrowRight size={18} />
+              </a>
+           </div>
+           
+           <div className="p-10 rounded-[3rem] border border-white/5" style={{background:'var(--clr-surface-3)'}}>
+              <p className="text-[10px] font-bold uppercase tracking-widest opacity-40 mb-4" style={{color:'var(--clr-on-surface-variant)'}}>Catatan Komunitas</p>
+              <div className="flex items-start gap-4">
+                 <span className="material-symbols-outlined text-[20px] mt-1" style={{color:'var(--clr-tertiary)'}}>info</span>
+                 <p className="text-xs leading-relaxed opacity-60" style={{color:'var(--clr-on-surface-variant)'}}>Unit bisnis ini telah melewati tahap kurasi administrasi dan verifikasi tatap muka oleh dewan pengurus MedanPro.</p>
+              </div>
+           </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 
 // --- MAIN APP COMPONENT ---
 
@@ -641,18 +690,21 @@ export default function App() {
   const location = useLocation();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Semua');
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+
+
+  // --- THEME ---
+  const [theme, setTheme] = useState(() => localStorage.getItem('mb_theme') || 'light');
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('mb_theme', theme);
+  }, [theme]);
+  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark');
 
   // --- DATA STATE (CRUD) with Persistence ---
   const [appData, setAppData] = useState(() => {
     const saved = localStorage.getItem('medan_community_data');
     if (saved) return JSON.parse(saved);
-    return {
-      members: membersData,
-      stats: statsData,
-      events: eventsData,
-      opportunities: opportunitiesData
-    };
+    return { members: membersData, stats: statsData, events: eventsData, opportunities: opportunitiesData };
   });
 
   useEffect(() => {
@@ -678,73 +730,80 @@ export default function App() {
 
   // Skip rendering the full layout for Admin routes
   if (location.pathname.startsWith('/admin')) {
-    return isAdminAuthenticated ? (
-        <AdminPanel data={appData} onUpdate={setAppData} onBack={() => { setIsAdminAuthenticated(false); navigate('/'); }} />
-    ) : (
-        <AdminLoginPage onLogin={() => setIsAdminAuthenticated(true)} />
-    );
+    return <AdminPanel />;
   }
 
   return (
-    <div className="app-shell min-h-screen text-on-surface font-body selection:bg-primary/20 selection:text-primary overflow-x-hidden">
-      
-      {/* --- TopNavBar Component --- */}
-      <nav className="fixed top-3 left-0 right-0 z-50 px-3 sm:px-6 lg:px-8 transition-all duration-700">
-        <div className="glass-panel max-w-7xl mx-auto rounded-3xl px-6 sm:px-8 py-4 sm:py-5 flex justify-between items-center">
-          <Link 
-            to="/"
-            className="text-2xl sm:text-3xl font-black text-primary font-headline tracking-tighter cursor-pointer group flex items-center gap-3 sm:gap-4"
-          >
-            <div className="bg-primary p-2.5 sm:p-3 rounded-2xl group-hover:rotate-12 transition-transform shadow-2xl shadow-primary/30">
-                <Briefcase size={22} className="text-white sm:hidden" />
-                <Briefcase size={28} className="text-white hidden sm:block" />
-            </div>
-            <span className="hidden sm:inline bg-gradient-to-r from-primary to-primary-container bg-clip-text text-transparent">MEDAN BUSINESS</span>
+    <div className="app-shell overflow-x-hidden min-h-screen flex flex-col">
+      {/* NAVBAR */}
+      <nav className="fixed top-0 left-0 right-0 z-50 glass-nav">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex justify-between items-center">
+          {/* Logo */}
+          <Link to="/" className="group flex items-center gap-3">
+            <span className="font-headline font-bold text-2xl tracking-tighter transition-all group-hover:scale-105" style={{color:'var(--clr-primary-container)'}}>MedanPro</span>
           </Link>
-          <div className="hidden xl:flex items-center space-x-2">
-            {[
-              { path: '/', label: 'Beranda' },
-              { path: '/members', label: 'Anggota', icon: <UserCircle size={16} /> },
-              { path: '/business', label: 'Bisnis', icon: <Store size={16} /> },
-              { path: '/events', label: 'Agenda' },
-              { path: '/opportunities', label: 'Peluang' },
-              { path: '/resources', label: 'Sumber Daya' },
-              { path: '/about', label: 'Visi' }
-            ].map(item => (
-              <Link 
-                key={item.path}
-                to={item.path}
-                className={`px-5 py-3 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-500 flex items-center gap-2 ${location.pathname === item.path ? 'bg-primary text-white shadow-2xl shadow-primary/20 scale-105' : 'text-slate-600 hover:bg-primary/5 hover:text-primary'}`}
-              >
-                {item.icon} {item.label}
-              </Link>
-            ))}
-          </div>
-          <div className="flex items-center gap-8">
-            <Link 
-              to="/join"
-              className="bg-primary text-white px-5 sm:px-8 py-3 sm:py-4 rounded-2xl font-black text-[10px] sm:text-xs uppercase tracking-widest hover:bg-secondary hover:shadow-4xl transition-all duration-500 shadow-2xl shadow-primary/20"
-            >
-              Join Us
-            </Link>
-          </div>
-        </div>
 
-        <div className="xl:hidden max-w-7xl mx-auto mt-3 px-1">
-          <div className="glass-panel rounded-2xl px-2 py-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex items-center gap-10">
             {[
               { path: '/', label: 'Beranda' },
               { path: '/members', label: 'Anggota' },
               { path: '/business', label: 'Bisnis' },
               { path: '/events', label: 'Agenda' },
-              { path: '/opportunities', label: 'Peluang' },
-              { path: '/resources', label: 'Resource' },
-              { path: '/about', label: 'Visi' }
-            ].map((item) => (
+              { path: '/opportunities', label: 'Peluang' }
+            ].map(item => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`inline-flex items-center px-4 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-[0.18em] transition-all mr-1 ${location.pathname === item.path ? 'bg-primary text-white' : 'text-slate-600 hover:bg-primary/10 hover:text-primary'}`}
+                className={`nav-link font-label hover:text-white transition-colors py-1 ${
+                  location.pathname === item.path ? 'active' : ''
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Actions */}
+          <div className="flex items-center gap-6">
+             <div className="hidden sm:flex gap-4 opacity-70">
+                <span className="material-symbols-outlined cursor-pointer hover:text-primary transition-colors text-[24px]">notifications</span>
+                <span className="material-symbols-outlined cursor-pointer hover:text-primary transition-colors text-[24px]">account_circle</span>
+             </div>
+             <Link
+              to="/join"
+              className="bg-gradient-to-br from-primary-fixed-dim to-primary-container text-on-primary-container px-6 py-2.5 rounded-xl font-bold text-sm scale-95 active:scale-90 transition-transform"
+            >
+              Join Us
+            </Link>
+             <button
+              onClick={toggleTheme}
+              className="theme-toggle w-10 h-10 rounded-xl flex lg:hidden items-center justify-center"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+          </div>
+        </div>
+        
+        {/* Mobile Nav Overlay (Scrollable Bar) */}
+        <div className="lg:hidden px-3 pb-3">
+          <div className="flex gap-1 overflow-x-auto scrollbar-hide py-3 px-2 bg-white/5 rounded-2xl border border-white/5">
+            {[
+              { path: '/', label: 'Home' },
+              { path: '/members', label: 'Anggota' },
+              { path: '/business', label: 'Bisnis' },
+              { path: '/events', label: 'Agenda' },
+              { path: '/opportunities', label: 'Peluang' },
+              { path: '/resources', label: 'Docs' },
+              { path: '/about', label: 'Visi' }
+            ].map(item => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`nav-link-mobile px-4 py-2.5 whitespace-nowrap ${
+                  location.pathname === item.path ? 'active' : ''
+                }`}
               >
                 {item.label}
               </Link>
@@ -753,9 +812,10 @@ export default function App() {
         </div>
       </nav>
 
-      <main className="min-h-screen pt-44 xl:pt-36">
+      {/* Main Content */}
+      <main className="flex-grow pt-32 lg:pt-24 overflow-x-hidden">
         <Routes>
-          <Route path="/" element={<HomePage onNavigate={navigate} />} />
+          <Route path="/" element={<HomePage onNavigate={navigate} opportunities={appData.opportunities} />} />
           <Route path="/members" element={<MembersPersonalPage searchTerm={searchTerm} setSearchTerm={setSearchTerm} filteredMembers={filteredMembers} onSelectProfile={(id) => handleSelectProfile(id, 'personal')} />} />
           <Route path="/business" element={
             <BusinessCatalogPage 
@@ -767,8 +827,8 @@ export default function App() {
                     onSelectProfile={(id) => handleSelectProfile(id, 'business')}
             />
           } />
-                  <Route path="/profile/personal/:id" element={<PersonalProfilePage members={appData.members} />} />
-                  <Route path="/profile/business/:id" element={<BusinessProfilePage members={appData.members} />} />
+          <Route path="/profile/personal/:id" element={<PersonalProfilePage members={appData.members} />} />
+          <Route path="/profile/business/:id" element={<BusinessProfilePage members={appData.members} />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/join" element={<JoinPage />} />
@@ -777,69 +837,66 @@ export default function App() {
         </Routes>
       </main>
 
-      {/* --- Footer Component --- */}
-      <footer className="pt-16 pb-12 px-4 sm:px-8 lg:px-10 mt-20 sm:mt-24">
-        <div className="max-w-7xl mx-auto bg-white/85 backdrop-blur-2xl rounded-[2rem] sm:rounded-[2.75rem] section-frame px-6 sm:px-10 lg:px-16 py-12 sm:py-16 flex flex-col lg:flex-row justify-between items-start gap-12 sm:gap-20">
-          <div className="space-y-12 max-w-md">
-            <div className="text-3xl sm:text-5xl font-black text-primary font-headline tracking-tighter leading-none">MEDAN <br/>BUSINESS GROUP</div>
-            <p className="text-base sm:text-2xl text-on-surface-variant leading-relaxed font-medium opacity-60">Kurasi profesional paling eksklusif untuk membangun masa depan industri Kota Medan melalui kolaborasi berkualitas.</p>
-            <div className="flex gap-6">
-              <a href="#" className="w-16 h-16 rounded-[2rem] bg-surface-container-high flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all shadow-xl">
-                <Instagram size={32} />
-              </a>
-              <a href="#" className="w-16 h-16 rounded-[2rem] bg-surface-container-high flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all shadow-xl">
-                <Facebook size={32} />
-              </a>
-              <a href={buildWhatsAppLink('Halo Medan Business, saya ingin terhubung dan mendapatkan info komunitas.')} target="_blank" rel="noreferrer" className="w-16 h-16 rounded-[2rem] bg-surface-container-high flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all shadow-xl">
-                <Share2 size={32} />
-              </a>
-            </div>
+      {/* FOOTER */}
+      <footer className="w-full py-16 px-8 mt-24 border-t" style={{backgroundColor: 'var(--clr-surface)', borderColor: 'var(--clr-border)'}}>
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-16">
+          <div>
+            <div className="font-headline font-bold text-3xl mb-4 tracking-tighter" style={{color:'var(--clr-primary-container)'}}>MedanPro</div>
+            <p className="font-label text-sm max-w-xs leading-loose" style={{color: 'var(--clr-on-surface-variant)'}}>
+              © 2025 MedanPro. All Rights Reserved. Private network eksklusif bagi pengusaha dan profesional terkemuka di Sumatera Utara.
+            </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-16 lg:gap-24">
-            <div className="space-y-10">
-              <h4 className="font-black text-primary uppercase text-xs tracking-[0.5em] opacity-40">PROFIL</h4>
-              <div className="flex flex-col gap-6">
-                <Link to="/members" className="text-on-surface-variant hover:text-primary text-left text-base sm:text-xl font-black transition-colors">Anggota</Link>
-                <Link to="/business" className="text-on-surface-variant hover:text-primary text-left text-base sm:text-xl font-black transition-colors">Unit Bisnis</Link>
-                <Link to="/about" className="text-on-surface-variant hover:text-primary text-left text-base sm:text-xl font-black transition-colors">Visi & Misi</Link>
-              </div>
+          
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-12 lg:gap-20">
+            <div className="flex flex-col gap-4">
+              <span className="text-on-surface font-bold text-sm tracking-tight">Network</span>
+              <Link to="/members" className="text-on-surface-variant text-xs hover:text-primary transition-colors hover:underline">Anggota</Link>
+              <Link to="/business" className="text-on-surface-variant text-xs hover:text-primary transition-colors hover:underline">Bisnis</Link>
             </div>
-            <div className="space-y-10">
-               <h4 className="font-black text-primary uppercase text-xs tracking-[0.5em] opacity-40">JARINGAN</h4>
-               <div className="flex flex-col gap-6">
-                <Link to="/events" className="text-on-surface-variant hover:text-primary text-left text-base sm:text-xl font-black transition-colors">Agenda Kopdar</Link>
-                <Link to="/opportunities" className="text-on-surface-variant hover:text-primary text-left text-base sm:text-xl font-black transition-colors">Peluang Bisnis</Link>
-                <Link to="/resources" className="text-on-surface-variant hover:text-primary text-left text-base sm:text-xl font-black transition-colors">Sumber Daya</Link>
+            <div className="flex flex-col gap-4">
+              <span className="text-on-surface font-bold text-sm tracking-tight">Ecosystem</span>
+              <Link to="/opportunities" className="text-on-surface-variant text-xs hover:text-primary transition-colors hover:underline">Peluang</Link>
+              <Link to="/resources" className="text-on-surface-variant text-xs hover:text-primary transition-colors hover:underline">Resources</Link>
+            </div>
+            <div className="flex flex-col gap-4">
+              <span className="text-on-surface font-bold text-sm tracking-tight">Legal</span>
+              <a href="#" className="text-on-surface-variant text-xs hover:text-primary transition-colors hover:underline">Privacy Policy</a>
+              <a href="#" className="text-on-surface-variant text-xs hover:text-primary transition-colors hover:underline">Terms of Service</a>
+            </div>
+            <div className="flex flex-col gap-4">
+              <span className="text-on-surface font-bold text-sm tracking-tight">Connect</span>
+              <button onClick={toggleTheme} className="text-left text-on-surface-variant text-xs hover:text-primary transition-colors uppercase tracking-widest font-bold">
+                 {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+              </button>
+              <div className="flex gap-3 mt-1">
+                 <a href="https://instagram.com/medanpro" target="_blank" rel="noreferrer" className="opacity-60 cursor-pointer hover:opacity-100 hover:text-primary transition-all">
+                    <Instagram size={16} />
+                 </a>
+                 <a href="https://facebook.com/medanpro" target="_blank" rel="noreferrer" className="opacity-60 cursor-pointer hover:opacity-100 hover:text-primary transition-all">
+                    <Facebook size={16} />
+                 </a>
               </div>
             </div>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto mt-8 pt-6 px-2 flex flex-col md:flex-row justify-between items-center gap-6 text-outline text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] sm:tracking-[0.25em] opacity-60 text-center md:text-left">
-          <span>© 2024 MEDAN COMMUNITY BUSINESS. PREMIUM CURATION.</span>
-          <div className="flex gap-5 sm:gap-12">
-            <Link to="/admin" className="hover:text-primary transition-colors cursor-pointer">ADMIN CMS</Link>
-            <a href="#" className="hover:text-primary transition-colors">LEGAL</a>
-            <a href="#" className="hover:text-primary transition-colors">PRIVACY</a>
+
+        <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.2em] font-bold" style={{color: 'var(--clr-on-surface-variant)', opacity:0.5}}>
+          <span>Designed for North Sumatra Business Leaders</span>
+          <div className="flex gap-6">
+            <Link to="/admin" className="hover:text-primary">Admin Access</Link>
           </div>
         </div>
       </footer>
 
-      <a
-        href={buildWhatsAppLink('Halo Tim Medan Business, saya ingin konsultasi cepat terkait keanggotaan dan kolaborasi.')}
-        target="_blank"
+      {/* Floating Action */}
+      <a 
+        href={buildWhatsAppLink('Halo MedanPro, saya ingin informasi lebih lanjut.')} 
+        target="_blank" 
         rel="noreferrer"
-        className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-[80] group"
-        aria-label="Hubungi via WhatsApp"
+        className="fixed bottom-10 right-10 z-[100] w-14 h-14 bg-primary-container rounded-3xl flex items-center justify-center text-on-primary-container shadow-2xl hover:scale-110 active:scale-95 transition-all group"
       >
-        <div className="flex items-center gap-3 rounded-full bg-[#25D366] text-white pl-3 sm:pl-4 pr-4 sm:pr-5 py-2.5 sm:py-3 shadow-[0_18px_40px_-18px_rgba(37,211,102,0.8)] hover:scale-105 transition-all">
-          <span className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/20 flex items-center justify-center">
-            <MessageCircle size={20} />
-          </span>
-          <div className="hidden sm:block leading-none">
-            <p className="text-[10px] uppercase font-black tracking-widest opacity-80">CTWA</p>
-            <p className="text-sm font-black">Chat WhatsApp</p>
-          </div>
-        </div>
+        <MessageCircle size={26} />
+        <span className="absolute right-full mr-4 bg-white text-on-secondary-fixed px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">Chat with Admin</span>
       </a>
     </div>
   );
